@@ -33,4 +33,13 @@ public class UserService {
 		persistance.setPassword(encoder.encode(user.getPassword()));
 		persistance.setEmail(user.getEmail());
 	}
+	
+	@Transactional(readOnly = true)
+	public User find(String username) {
+		User user = userRepository.findByUsername(username).orElseGet(() -> {
+			return new User();
+		});
+		
+		return user;
+	}
 }

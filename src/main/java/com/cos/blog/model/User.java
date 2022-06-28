@@ -45,10 +45,10 @@ public class User {
 	private String oauth;
 	
 	@OneToMany(mappedBy = "user")
-	private List<Board> board_list = new ArrayList<>();
+	private List<Board> boards = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user")
-	private List<Reply> reply_list = new ArrayList<>();
+	private List<Reply> replys = new ArrayList<>();
 	
 	@CreationTimestamp
 	private Timestamp create_date;

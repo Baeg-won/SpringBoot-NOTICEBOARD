@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -45,8 +47,9 @@ public class Board {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@OneToMany(mappedBy = "board")
-	private List<Reply> reply_list = new ArrayList<>();
+	@OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+	@OrderBy("id desc")
+	private List<Reply> replys = new ArrayList<>();
 	
 	@CreationTimestamp
 	private Timestamp create_date;

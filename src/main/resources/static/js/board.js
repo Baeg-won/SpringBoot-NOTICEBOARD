@@ -11,6 +11,10 @@ let index = {
 		$("#btn-update").on("click", () => {
 			this.update();
 		});
+		
+		$("#btn-reply-save").on("click", () => {
+			this.replySave();
+		});
 	},
 	
 	write: function() {
@@ -34,7 +38,7 @@ let index = {
 	},
 	
 	deleteById: function() {		
-		let id = $("#id").text();
+		let id = $("#board_id").text();
 		
 		$.ajax({
 			type: "DELETE",
@@ -48,7 +52,7 @@ let index = {
 	},
 	
 	update: function() {
-		let id = $("#id").val();
+		let id = $("#board_id").val();
 		let data = {
 			title: $("#title").val(),
 			content: $("#content").val()
@@ -63,6 +67,38 @@ let index = {
 		}).done(function(resp) {
 			alert("글 수정이 완료되었습니다.");
 			location.href = "/";
+		}).fail(function(error) {
+			alert(JSON.stringify(error));
+		});
+	},
+	
+	replySave: function() {
+		let id = $("#board_id").text();
+		let data = {
+			content: $("#reply-content").val()
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: `/api/board/${id}/reply`,
+			data: JSON.stringify(data),
+			contentType: "application/json; charset=utf-8",
+			//dataType: "json"
+		}).done(function(resp) {
+			alert("댓글 작성이 완료되었습니다.");
+			location.href = `/board/${id}`;
+		}).fail(function(error) {
+			alert(JSON.stringify(error));
+		});
+	},
+	
+	replyDelete: function(board_id, reply_id) {
+		$.ajax({
+			type: "DELETE",
+			url: `/api/board/${board_id}/reply/${reply_id}`
+		}).done(function(resp) {
+			alert("댓글 삭제가 완료되었습니다.");
+			location.href = `/board/${board_id}`;
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
 		});

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.model.Board;
+import com.cos.blog.model.Reply;
 import com.cos.blog.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,15 +29,27 @@ public class BoardApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	
-	@DeleteMapping("/api/board/{id}")
-	public ResponseDto<Integer> deleteById(@PathVariable Long id) {
+	@DeleteMapping("/api/board/{board_id}")
+	public ResponseDto<Integer> deleteById(@PathVariable("board_id") Long id) {
 		boardService.delete(id);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	
-	@PutMapping("/api/board/{id}")
-	public ResponseDto<Integer> update(@PathVariable Long id, @RequestBody Board board) {
+	@PutMapping("/api/board/{board_id}")
+	public ResponseDto<Integer> update(@PathVariable("board_id") Long id, @RequestBody Board board) {
 		boardService.update(id, board);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
+	
+	@PostMapping("/api/board/{board_id}/reply")
+	public ResponseDto<Integer> replyWrite(@PathVariable("board_id") Long id, @RequestBody Reply reply, @AuthenticationPrincipal PrincipalDetail principal) {
+		boardService.replyWrite(principal.getUser(), id, reply);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
+	
+	@DeleteMapping("/api/board/{board_id}/reply/{reply_id}")
+	public ResponseDto<Integer> replyDelete(@PathVariable Long reply_id) {
+		boardService.replyDelete(reply_id);
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 }

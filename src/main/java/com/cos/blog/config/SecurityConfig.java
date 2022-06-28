@@ -11,8 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import com.cos.blog.config.auth.PrincipalDetailService;
+import com.cos.blog.handler.UserLoginFailHandler;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	
 	private final PrincipalDetailService principalDetailService;
+	private final AuthenticationFailureHandler userLoginFailHandler;
 	
 	@Bean
 	public BCryptPasswordEncoder encodePWD() {
@@ -51,6 +54,7 @@ public class SecurityConfig {
 		  	.formLogin()
 		  	.loginPage("/auth/loginForm")
 		  	.loginProcessingUrl("/auth/loginProc")
+		  	.failureHandler(userLoginFailHandler)
 		  	.defaultSuccessUrl("/");
         return http.build();
     }

@@ -55,7 +55,7 @@ public class UserService {
 		persistance.setEmail(user.getEmail());
 	}
 	
-	@Transactional(readOnly = true)
+	@Transactional
 	public void kakaoLogin(String code) {
 		RestTemplate rt = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();

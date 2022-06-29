@@ -45,6 +45,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 		  .csrf().disable()
+		  .rememberMe()
+		  	.rememberMeParameter("remember")
+		  	.tokenValiditySeconds(3600)
+		  	.alwaysRemember(false)
+		  	.userDetailsService(principalDetailService)
+		  .and()
 		  .authorizeRequests()  
 		    .antMatchers("/", "/auth/**", "/js/**", "/css/**", "/image/**")
 		    .permitAll()

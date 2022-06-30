@@ -1,5 +1,8 @@
 package com.cos.blog.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,8 +17,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.client.RestTemplate;
 
+import com.cos.blog.dto.UserRequestDto;
 import com.cos.blog.model.KakaoProfile;
 import com.cos.blog.model.OAuthToken;
 import com.cos.blog.model.RoleType;
@@ -39,10 +45,32 @@ public class UserService {
 	private String secrectKey;
 
 	@Transactional
-	public void join(User user) {
-		user.setPassword(encoder.encode(user.getPassword()));
-		user.setRole(RoleType.USER);
+	public void join(UserRequestDto userDto) {
+		User user = User.builder()
+				.username(userDto.getUsername())
+				.password(encoder.encode(userDto.getPassword()))
+				.email(userDto.getEmail())
+				.role(RoleType.USER)
+				.build();
+		
 		userRepository.save(user);
+	}
+	
+	@Transactional
+	public void join(User user) {		
+		userRepository.save(user);
+	}
+	
+	@Transactional(readOnly = true)
+	public Map<String, String> validateHandling(BindingResult bindingResult) {
+		Map<String, String> validatorResult = new HashMap<>();
+		
+		for(FieldError error : bindingResult.getFieldErrors()) {
+			String validKeyName = String.format("valid_%s", error.getField());
+			validatorResult.put(validKeyName, error.getDefaultMessage());
+		}
+		
+		return validatorResult;
 	}
 	
 	@Transactional
@@ -114,8 +142,9 @@ public class UserService {
 		
 		User kakaoUser = User.builder()
 				.username(kakaoProfile.getKakao_account().getEmail() + "_" + kakaoProfile.getId())
-				.password(secrectKey)
+				.password(encoder.encode(secrectKey))
 				.email(kakaoProfile.getKakao_account().getEmail())
+				.role(RoleType.USER)
 				.oauth("kakao")
 				.build();
 		

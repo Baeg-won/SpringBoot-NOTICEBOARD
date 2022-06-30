@@ -23,8 +23,27 @@ let index = {
 			contentType: "application/json; charset=utf-8",
 			//dataType: "json"
 		}).done(function(resp) {
-			if(resp.status == 500)
-				alert("중복되는 사용자 아이디입니다.");	
+			if(resp.status == 400) {
+				alert("회원가입 입력 정보를 다시 확인해주십시오.")
+				
+				if(resp.data.hasOwnProperty('valid_username')){
+					$('#valid_username').text(resp.data.valid_username);
+					$('#valid_username').css('color', 'red');
+				}
+				else $('#valid_username').text('');
+				
+				if(resp.data.hasOwnProperty('valid_password')){
+					$('#valid_password').text(resp.data.valid_password);
+					$('#valid_password').css('color', 'red');
+				}
+				else $('#valid_password').text('');
+				
+				if(resp.data.hasOwnProperty('valid_email')){
+					$('#valid_email').text(resp.data.valid_email);
+					$('#valid_email').css('color', 'red');
+				}
+				else $('#valid_email').text('');
+			}
 			else {
 				alert("회원가입이 완료되었습니다.");
 				location.href = "/";	

@@ -10,7 +10,7 @@
 	</c:if>
 	<br> <br>
 	<div>
-		Number: <span id="board_id"><i>${board.id}</i></span><br> Writer: <span><i>${board.user.username}</i></span>
+		Number: <span id="board_id"><i>${board.id}</i></span><br> Writer: <span><i>${board.user.nickname}</i></span>
 	</div>
 	<hr>
 	<div class="form-group">
@@ -37,8 +37,8 @@
 				<li id="reply-${reply.id}" class="list-group-item d-flex justify-content-between">
 					<div>${reply.content}</div>
 					<div class="d-flex">
-						<div class="font-italic">Writer: ${reply.user.username} &nbsp;&nbsp;</div>
-						<c:if test="${reply.user.username == principal.user.username}">
+						<div class="font-italic">Writer: ${reply.user.nickname} &nbsp;&nbsp;</div>
+						<c:if test="${reply.user.nickname == principal.user.nickname}">
 							<button onClick="index.replyDelete(${board.id}, ${reply.id})" class="badge">Delete</button>
 						</c:if>
 					</div>

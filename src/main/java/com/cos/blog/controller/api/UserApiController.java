@@ -10,6 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.dto.UserRequestDto;
-import com.cos.blog.model.User;
 import com.cos.blog.service.UserService;
+import com.cos.blog.validator.CheckEmailValidator;
+import com.cos.blog.validator.CheckNicknameValidator;
+import com.cos.blog.validator.CheckUsernameValidator;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +32,17 @@ public class UserApiController {
 
 	private final UserService userService;
 	private final AuthenticationManager authenticationManager;
+	
+	private final CheckUsernameValidator checkUsernameValidator;
+	private final CheckNicknameValidator checkNicknameValidator;
+	private final CheckEmailValidator checkEmailValidator;
+	
+	@InitBinder
+	public void validatorBinder(WebDataBinder binder) {
+		binder.addValidators(checkUsernameValidator);
+		binder.addValidators(checkNicknameValidator);
+		binder.addValidators(checkEmailValidator);
+	}
 
 	@PostMapping("/auth/joinProc")
 	public ResponseDto<?> join(@Valid @RequestBody UserRequestDto userDto, BindingResult bindingResult) {
@@ -42,11 +57,11 @@ public class UserApiController {
 	}
 
 	@PutMapping("/user")
-	public ResponseDto<Integer> update(@RequestBody User user) {
-		userService.update(user);
+	public ResponseDto<?> update(@RequestBody UserRequestDto userDto) {
+		userService.update(userDto);
 
 		Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+				.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);

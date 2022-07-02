@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,6 +50,7 @@ public class UserService {
 		User user = User.builder()
 				.username(userDto.getUsername())
 				.password(encoder.encode(userDto.getPassword()))
+				.nickname(userDto.getNickname())
 				.email(userDto.getEmail())
 				.role(RoleType.USER)
 				.build();
@@ -59,6 +61,16 @@ public class UserService {
 	@Transactional
 	public void join(User user) {		
 		userRepository.save(user);
+	}
+	
+	@Transactional
+	public void update(UserRequestDto userDto) {
+		User persistance = userRepository.findByUsername(userDto.getUsername()).orElseThrow(() -> {
+			return new IllegalArgumentException("회원정보 수정 실패: 존재하지 않는 회원입니다.");
+		});
+		
+		persistance.setPassword(encoder.encode(userDto.getPassword()));
+		persistance.setNickname(userDto.getNickname());
 	}
 	
 	@Transactional(readOnly = true)
@@ -73,14 +85,16 @@ public class UserService {
 		return validatorResult;
 	}
 	
-	@Transactional
-	public void update(User user) {
-		User persistance = userRepository.findByUsername(user.getUsername()).orElseThrow(() -> {
-			return new IllegalArgumentException("회원정보 수정 실패: 존재하지 않는 회원입니다.");
-		});
+	@Transactional(readOnly = true)
+	public Map<String, String> validateHandling(Errors errors){
+		Map<String, String> validatorResult = new HashMap<>();
 		
-		persistance.setPassword(encoder.encode(user.getPassword()));
-		persistance.setEmail(user.getEmail());
+		for(FieldError error : errors.getFieldErrors()) {
+			String validKeyName = String.format("valid_%s", error.getField());
+			validatorResult.put(validKeyName, error.getDefaultMessage());
+		}
+		
+		return validatorResult;
 	}
 	
 	@Transactional
@@ -143,6 +157,7 @@ public class UserService {
 		User kakaoUser = User.builder()
 				.username(kakaoProfile.getKakao_account().getEmail() + "_" + kakaoProfile.getId())
 				.password(encoder.encode(secrectKey))
+				.nickname(kakaoProfile.getProperties().getNickname())
 				.email(kakaoProfile.getKakao_account().getEmail())
 				.role(RoleType.USER)
 				.oauth("kakao")

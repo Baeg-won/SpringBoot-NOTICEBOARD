@@ -6,6 +6,8 @@
 	<c:forEach var="board" items="${boards.content}">
 		<div class="card m-2">
 			<div class="card-body">
+				<span style="float:right">Created: ${board.createDate}</span><br>
+				<span style="float:right">Views: ${board.count}</span>
 				<h4 class="card-title">${board.title}</h4>
 				<a href="/board/${board.id}" class="btn btn-primary">Show detail</a>
 			</div>

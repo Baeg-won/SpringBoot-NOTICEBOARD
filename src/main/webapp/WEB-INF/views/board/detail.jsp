@@ -10,7 +10,10 @@
 	</c:if>
 	<br> <br>
 	<div>
-		Number: <span id="board_id"><i>${board.id}</i></span><br> Writer: <span><i>${board.user.nickname}</i></span>
+		Created: <span><i>${board.createDate}</i></span><br>
+		Number: <span id="board_id"><i>${board.id}</i></span><br>
+		Writer: <span><i>${board.user.nickname}</i></span><br>
+		Views: <span><i>${board.count}</i></span>
 	</div>
 	<hr>
 	<div class="form-group">

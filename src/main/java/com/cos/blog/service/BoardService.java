@@ -1,5 +1,9 @@
 package com.cos.blog.service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +29,38 @@ public class BoardService {
 		boardRepository.save(board);
 	}
 	
-	@Transactional(readOnly = true)
+	@Transactional
+	public Board detail(Long id, HttpServletRequest request, HttpServletResponse response) {
+		Cookie oldCookie = null;
+	    Cookie[] cookies = request.getCookies();
+	    if (cookies != null)
+	        for (Cookie cookie : cookies)
+	            if (cookie.getName().equals("boardView"))
+	                oldCookie = cookie;
+
+	    if (oldCookie != null) {
+	        if (!oldCookie.getValue().contains("[" + id.toString() + "]")) {
+	        	boardRepository.updateCount(id);
+	            oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+	            oldCookie.setPath("/");
+	            oldCookie.setMaxAge(60 * 60 * 24);
+	            response.addCookie(oldCookie);
+	        }
+	    }
+	    else {
+	    	boardRepository.updateCount(id);
+	        Cookie newCookie = new Cookie("boardView","[" + id + "]");
+	        newCookie.setPath("/");
+	        newCookie.setMaxAge(60 * 60 * 24);
+	        response.addCookie(newCookie);
+	    }
+		
+		return boardRepository.findById(id).orElseThrow(() -> {
+			return new IllegalArgumentException("글 상세보기 실패: 아이디를 찾을 수 없습니다.");
+		});
+	}
+	
+	@Transactional
 	public Board detail(Long id) {
 		return boardRepository.findById(id).orElseThrow(() -> {
 			return new IllegalArgumentException("글 상세보기 실패: 아이디를 찾을 수 없습니다.");

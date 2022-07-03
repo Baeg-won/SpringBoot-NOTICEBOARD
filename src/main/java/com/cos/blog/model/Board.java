@@ -1,6 +1,7 @@
 package com.cos.blog.model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
@@ -53,4 +53,8 @@ public class Board {
 	
 	@CreationTimestamp
 	private Timestamp create_date;
+	
+	public String getCreateDate() {
+		return new SimpleDateFormat("yyyy.MM.dd").format(create_date);
+	}
 }

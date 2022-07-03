@@ -1,5 +1,8 @@
 package com.cos.blog.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -32,8 +35,8 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/{id}")
-	public String detail(@PathVariable Long id, Model model) {
-		model.addAttribute("board", boardService.detail(id));
+	public String detail(@PathVariable Long id, Model model, HttpServletRequest request, HttpServletResponse response) {
+		model.addAttribute("board", boardService.detail(id, request, response));
 		return "board/detail";
 	}
 	

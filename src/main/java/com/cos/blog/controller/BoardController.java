@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.service.BoardService;
@@ -24,8 +25,16 @@ public class BoardController {
 	private final BoardService boardService;
 	
 	@GetMapping("/")
-	public String index(Model model, @PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-		model.addAttribute("boards", boardRepository.findAll(pageable));
+	public String index(Model model, 
+			@PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+		
+		if(searchKeyword == null)
+			model.addAttribute("boards", boardRepository.findAll(pageable));
+		else {
+			model.addAttribute("boards", boardRepository.findByTitleContaining(searchKeyword, pageable));
+		}
+		
 		return "index";
 	}
 	

@@ -3,11 +3,17 @@
 <%@ include file="layout/header.jsp"%>
 
 <div class="container">
+	<form action="/" method="GET" class="form-inline p-2 bd-highlight">
+		<div>
+			<input type="text" name="searchKeyword" class="form-control" placeholder="검색">
+			<button type="submit" class="btn btn-primary">Search</button>
+		</div>
+	</form>
+
 	<c:forEach var="board" items="${boards.content}">
 		<div class="card m-2">
 			<div class="card-body">
-				<span style="float:right">Created: ${board.createDate}</span><br>
-				<span style="float:right">Views: ${board.count}</span>
+				<span style="float: right">Created: ${board.createDate}</span><br> <span style="float: right">Views: ${board.count}</span>
 				<h4 class="card-title">${board.title}</h4>
 				<a href="/board/${board.id}" class="btn btn-primary">Show detail</a>
 			</div>
@@ -20,7 +26,7 @@
 				<li class="page-item disabled"><a class="page-link" href="?page=${boards.number - 1}">Prev</a></li>
 			</c:when>
 			<c:otherwise>
-				<li class="page-item"><a class="page-link" href="?page=${boards.number - 1}">Prev</a></li>
+				<li class="page-item"><a class="page-link" href="?page=${boards.number - 1}&searchKeyword=${param.searchKeyword}">Prev</a></li>
 			</c:otherwise>
 		</c:choose>
 		<c:choose>
@@ -28,7 +34,7 @@
 				<li class="page-item disabled"><a class="page-link" href="?page=${boards.number + 1}">Next</a></li>
 			</c:when>
 			<c:otherwise>
-				<li class="page-item"><a class="page-link" href="?page=${boards.number + 1}">Next</a></li>
+				<li class="page-item"><a class="page-link" href="?page=${boards.number + 1}&searchKeyword=${param.searchKeyword}">Next</a></li>
 			</c:otherwise>
 		</c:choose>
 	</ul>

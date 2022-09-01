@@ -3,26 +3,26 @@ let index = {
 		$("#btn-write").on("click", () => {
 			this.write();
 		});
-		
+
 		$("#btn-delete").on("click", () => {
 			this.deleteById();
 		});
-		
+
 		$("#btn-update").on("click", () => {
 			this.update();
 		});
-		
+
 		$("#btn-reply-save").on("click", () => {
 			this.replySave();
 		});
 	},
-	
+
 	write: function() {
 		let data = {
 			title: $("#title").val(),
 			content: $("#content").val()
 		};
-		
+
 		$.ajax({
 			type: "POST",
 			url: "/api/board",
@@ -36,10 +36,10 @@ let index = {
 			alert(JSON.stringify(error));
 		});
 	},
-	
-	deleteById: function() {		
+
+	deleteById: function() {
 		let id = $("#board_id").text();
-		
+
 		$.ajax({
 			type: "DELETE",
 			url: "/api/board/" + id
@@ -50,14 +50,14 @@ let index = {
 			alert(JSON.stringify(error));
 		});
 	},
-	
+
 	update: function() {
 		let id = $("#board_id").val();
 		let data = {
 			title: $("#title").val(),
 			content: $("#content").val()
 		};
-		
+
 		$.ajax({
 			type: "PUT",
 			url: "/api/board/" + id,
@@ -71,13 +71,13 @@ let index = {
 			alert(JSON.stringify(error));
 		});
 	},
-	
+
 	replySave: function() {
 		let id = $("#board_id").text();
 		let data = {
 			content: $("#reply-content").val()
 		};
-		
+
 		$.ajax({
 			type: "POST",
 			url: `/api/board/${id}/reply`,
@@ -91,7 +91,7 @@ let index = {
 			alert(JSON.stringify(error));
 		});
 	},
-	
+
 	replyDelete: function(board_id, reply_id) {
 		$.ajax({
 			type: "DELETE",
@@ -102,6 +102,37 @@ let index = {
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
 		});
+	},
+
+	recommend: function(board_id, recommend_state) {
+		let recommend = $("#btn-recommend");
+		if (!recommend_state) {
+			$.ajax({
+				type: "POST",
+				url: `/api/board/${board_id}/recommend`,
+				dataType: "json"
+			}).done(resp => {
+				recommend.removeClass("btn-outline-success");
+				recommend.addClass("btn-success");
+				
+				location.reload();
+			}).fail(error => {
+				console.log(error);
+			});
+		} else {
+			$.ajax({
+				type: "DELETE",
+				url: `/api/board/${board_id}/recommend`,
+				dataType: "json"
+			}).done(resp => {
+				recommend.removeClass("btn-success");
+				recommend.addClass("btn-outline-success");
+				
+				location.reload();
+			}).fail(error => {
+				console.log(error);
+			});
+		}
 	}
 }
 

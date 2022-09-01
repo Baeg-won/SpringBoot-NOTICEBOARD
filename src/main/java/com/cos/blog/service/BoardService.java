@@ -30,41 +30,46 @@ public class BoardService {
 	}
 	
 	@Transactional
-	public Board detail(Long id, HttpServletRequest request, HttpServletResponse response) {
-		Cookie oldCookie = null;
-	    Cookie[] cookies = request.getCookies();
-	    if (cookies != null)
-	        for (Cookie cookie : cookies)
-	            if (cookie.getName().equals("boardView"))
-	                oldCookie = cookie;
-
-	    if (oldCookie != null) {
-	        if (!oldCookie.getValue().contains("[" + id.toString() + "]")) {
-	        	boardRepository.updateCount(id);
-	            oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
-	            oldCookie.setPath("/");
-	            oldCookie.setMaxAge(60 * 60 * 24);
-	            response.addCookie(oldCookie);
-	        }
-	    }
-	    else {
-	    	boardRepository.updateCount(id);
-	        Cookie newCookie = new Cookie("boardView","[" + id + "]");
-	        newCookie.setPath("/");
-	        newCookie.setMaxAge(60 * 60 * 24);
-	        response.addCookie(newCookie);
-	    }
+	public Board detail(Long id, HttpServletRequest request, HttpServletResponse response, Long principal_id) {
 		
-		return boardRepository.findById(id).orElseThrow(() -> {
-			return new IllegalArgumentException("글 상세보기 실패: 아이디를 찾을 수 없습니다.");
-		});
-	}
-	
-	@Transactional
-	public Board detail(Long id) {
-		return boardRepository.findById(id).orElseThrow(() -> {
-			return new IllegalArgumentException("글 상세보기 실패: 아이디를 찾을 수 없습니다.");
-		});
+		if(request != null) {
+			Cookie oldCookie = null;
+		    Cookie[] cookies = request.getCookies();
+		    if (cookies != null)
+		        for (Cookie cookie : cookies)
+		            if (cookie.getName().equals("boardView"))
+		                oldCookie = cookie;
+
+		    if (oldCookie != null) {
+		        if (!oldCookie.getValue().contains("[" + id.toString() + "]")) {
+		        	boardRepository.updateCount(id);
+		            oldCookie.setValue(oldCookie.getValue() + "_[" + id + "]");
+		            oldCookie.setPath("/");
+		            oldCookie.setMaxAge(60 * 60 * 24);
+		            response.addCookie(oldCookie);
+		        }
+		    }
+		    else {
+		    	boardRepository.updateCount(id);
+		        Cookie newCookie = new Cookie("boardView","[" + id + "]");
+		        newCookie.setPath("/");
+		        newCookie.setMaxAge(60 * 60 * 24);
+		        response.addCookie(newCookie);
+		    }
+		}
+	    
+	    Board board = boardRepository.findById(id).orElseThrow(() -> {
+	    	return new IllegalArgumentException("글 상세보기 실패: 아이디를 찾을 수 없습니다.");
+	    });
+	    
+	    board.getRecommends().forEach((recommend) -> {
+	    	if(recommend.getUser().getId() == principal_id) {
+	    		board.setRecommend_state(true);
+	    	}
+	    });
+	    board.setRecommend_count(board.getRecommends().size());
+		
+		return board;
 	}
 	
 	@Transactional

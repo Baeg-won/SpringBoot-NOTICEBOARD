@@ -17,8 +17,11 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,6 +53,15 @@ public class Board {
 	@OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
 	@OrderBy("id desc")
 	private List<Reply> replys = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
+	private List<Recommend> recommends;
+	
+	@Transient
+	private boolean recommend_state;
+	
+	@Transient
+	private int recommend_count;
 	
 	@CreationTimestamp
 	private Timestamp create_date;

@@ -14,6 +14,7 @@ import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.model.Board;
 import com.cos.blog.model.Reply;
 import com.cos.blog.service.BoardService;
+import com.cos.blog.service.RecommendService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardApiController {
 	
 	private final BoardService boardService;
+	private final RecommendService recommendService;
 
 	@PostMapping("/api/board")
 	public ResponseDto<Integer> write(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
@@ -50,6 +52,18 @@ public class BoardApiController {
 	@DeleteMapping("/api/board/{board_id}/reply/{reply_id}")
 	public ResponseDto<Integer> replyDelete(@PathVariable Long reply_id) {
 		boardService.replyDelete(reply_id);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
+	
+	@PostMapping("/api/board/{board_id}/recommend")
+	public ResponseDto<Integer> recommend(@PathVariable("board_id") Long board_id, @AuthenticationPrincipal PrincipalDetail principal) {
+		recommendService.recommend(board_id, principal.getUser().getId());
+		return new ResponseDto<Integer>(HttpStatus.CREATED.value(), 1);
+	}
+	
+	@DeleteMapping("/api/board/{board_id}/recommend")
+	public ResponseDto<Integer> cancelRecommend(@PathVariable("board_id") Long board_id, @AuthenticationPrincipal PrincipalDetail principal) {
+		recommendService.cancelRecommend(board_id, principal.getUser().getId());
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 }

@@ -17,6 +17,8 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -49,6 +51,7 @@ public class User {
 	
 	private String oauth;
 	
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
 	private List<Board> boards = new ArrayList<>();
 	

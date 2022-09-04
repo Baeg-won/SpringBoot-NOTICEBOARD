@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,10 +33,12 @@ public class Reply {
 	@Column(nullable = false, length = 200)
 	private String content;
 	
+	@JsonIgnoreProperties({"user", "replys"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
 	private Board board;
 	
+	@JsonIgnoreProperties({"boards", "replys"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;

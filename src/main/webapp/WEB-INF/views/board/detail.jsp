@@ -8,7 +8,7 @@
 		<a href="/board/${board.id}/updateForm" class="btn btn-warning">Edit</a>
 		<button id="btn-delete" class="btn btn-danger">Delete</button>
 	</c:if>
-	<br> <br>
+	<br><br>
 	<div>
 		Created: <span><i>${board.createDate}</i></span><br> Number: <span id="board_id"><i>${board.id}</i></span><br> Writer: <span><i>${board.user.nickname}</i></span><br> Views: <span><i>${board.count}</i></span>
 	</div>
@@ -27,12 +27,12 @@
 				<c:choose>
 					<c:when test="${board.user.id != principal.user.id}">
 						<button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-success" style="display: inline-block;">
-							추천 <span>${board.recommend_count}</span>
+							추천 <span>${board.recommendCount}</span>
 						</button>
 					</c:when>
 					<c:otherwise>
 						<button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-success" style="display: inline-block;" disabled>
-							추천 <span>${board.recommend_count}</span>
+							추천 <span>${board.recommendCount}</span>
 						</button>
 					</c:otherwise>
 				</c:choose>
@@ -43,12 +43,12 @@
 				<c:choose>
 					<c:when test="${board.user.id != principal.user.id}">
 						<button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-outline-success" style="display: inline-block;">
-							추천 <span>${board.recommend_count}</span>
+							추천 <span>${board.recommendCount}</span>
 						</button>
 					</c:when>
 					<c:otherwise>
 						<button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-outline-success" style="display: inline-block;" disabled>
-							추천 <span>${board.recommend_count}</span>
+							추천 <span>${board.recommendCount}</span>
 						</button>
 					</c:otherwise>
 				</c:choose>

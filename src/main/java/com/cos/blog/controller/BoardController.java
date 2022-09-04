@@ -26,16 +26,41 @@ public class BoardController {
 	private final BoardRepository boardRepository;
 	private final BoardService boardService;
 	
-	@GetMapping("/")
-	public String index(Model model, 
-			@PageableDefault(size = 3, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
-		
-		if(searchKeyword == null)
+	public void find(Model model, Pageable pageable, String searchKeyword) {
+		if(searchKeyword == null || searchKeyword.isBlank()) {
 			model.addAttribute("boards", boardRepository.findAll(pageable));
+		}
 		else {
 			model.addAttribute("boards", boardRepository.findByTitleContaining(searchKeyword, pageable));
 		}
+	}
+	
+	@GetMapping("/")
+	public String index(Model model, 
+			@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+		
+		find(model, pageable, searchKeyword);
+		
+		return "index";
+	}
+	
+	@GetMapping("/sort/view")
+	public String indexView(Model model, 
+			@PageableDefault(size = 10, sort = "count", direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+		
+		find(model, pageable, searchKeyword);
+		
+		return "index";
+	}
+	
+	@GetMapping("/sort/recommend")
+	public String indexRecommend(Model model, 
+			@PageableDefault(size = 10, sort = "recommendCount", direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+		
+		find(model, pageable, searchKeyword);
 		
 		return "index";
 	}

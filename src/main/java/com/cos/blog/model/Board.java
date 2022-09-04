@@ -46,22 +46,24 @@ public class Board {
 
 	private int count;
 	
+	@JsonIgnoreProperties({"boards", "replys"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
 	
+	@JsonIgnoreProperties({"board", "user"})
 	@OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
 	@OrderBy("id desc")
 	private List<Reply> replys = new ArrayList<>();
 	
+	@JsonIgnoreProperties({"board", "user"})
 	@OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
 	private List<Recommend> recommends;
 	
-	@Transient
-	private boolean recommend_state;
+	private int recommendCount;
 	
 	@Transient
-	private int recommend_count;
+	private boolean recommend_state;
 	
 	@CreationTimestamp
 	private Timestamp create_date;

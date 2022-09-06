@@ -29,9 +29,13 @@
 		</thead>
 		<c:forEach var="board" items="${boards.content}">
 			<tbody>
-				<tr onclick="location.href='/board/${board.id}'" style="cursor: pointer;">
+				<tr onclick="location.href='/board/${board.id}?page=${param.page}&searchKeyword=${param.searchKeyword}'" style="cursor: pointer;">
 					<th>${board.id}</th>
-					<th>${board.title}</th>
+					<th>${board.title}
+						<c:if test="${fn:length(board.replys) > 0}">
+							<span style="color: red;">[${fn:length(board.replys)}]</span>
+						</c:if>
+					</th>
 					<th>${board.user.nickname}</th>
 					<th>${board.createDate}</th>
 					<th>${board.count}</th>

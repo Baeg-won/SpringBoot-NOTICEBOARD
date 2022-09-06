@@ -63,6 +63,12 @@ public class Board {
 	private int recommendCount;
 	
 	@Transient
+	private Board prev_board;
+	
+	@Transient
+	private Board next_board;
+	
+	@Transient
 	private boolean recommend_state;
 	
 	@CreationTimestamp

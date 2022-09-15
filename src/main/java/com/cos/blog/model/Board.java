@@ -62,6 +62,8 @@ public class Board {
 	
 	private int recommendCount;
 	
+	private String userNickname;
+	
 	@Transient
 	private Board prev_board;
 	

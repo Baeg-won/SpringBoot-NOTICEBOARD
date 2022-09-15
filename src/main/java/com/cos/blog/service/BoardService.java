@@ -26,6 +26,7 @@ public class BoardService {
 	public void write(Board board, User user) {
 		board.setUser(user);
 		board.setCount(0);
+		board.setUserNickname(user.getNickname());
 		boardRepository.save(board);
 	}
 

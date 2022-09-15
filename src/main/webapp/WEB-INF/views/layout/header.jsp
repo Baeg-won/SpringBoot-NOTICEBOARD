@@ -22,7 +22,6 @@
 <link href="/css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 		<a class="navbar-brand" href="/">Home</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">

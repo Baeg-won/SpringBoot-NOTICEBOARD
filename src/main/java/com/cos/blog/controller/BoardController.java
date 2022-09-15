@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cos.blog.config.auth.PrincipalDetail;
-import com.cos.blog.model.Board;
 import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.service.BoardService;
 
@@ -23,15 +22,20 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
+	
+	private static String sort;
 
 	private final BoardRepository boardRepository;
 	private final BoardService boardService;
 	
-	public void find(Model model, Pageable pageable, String searchKeyword) {
+	public void find(Model model, Pageable pageable, String searchType, String searchKeyword) {
 		if(searchKeyword == null || searchKeyword.isBlank()) {
 			model.addAttribute("boards", boardRepository.findAll(pageable));
 		}
-		else {
+		
+		if(searchType.equals("nickname")) {
+			model.addAttribute("boards", boardRepository.findByUserNicknameContaining(searchKeyword, pageable));
+		} else {
 			model.addAttribute("boards", boardRepository.findByTitleContaining(searchKeyword, pageable));
 		}
 	}
@@ -39,9 +43,11 @@ public class BoardController {
 	@GetMapping("/")
 	public String index(Model model, 
 			@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+			@RequestParam(value = "searchType", defaultValue = "title") String searchType,
+			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword) {
 		
-		find(model, pageable, searchKeyword);
+		find(model, pageable, searchType, searchKeyword);
+		sort = "/";
 		
 		return "index";
 	}
@@ -49,9 +55,11 @@ public class BoardController {
 	@GetMapping("/sort/view")
 	public String indexView(Model model, 
 			@PageableDefault(size = 10, sort = "count", direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+			@RequestParam(value = "searchType", defaultValue = "title") String searchType,
+			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword) {
 		
-		find(model, pageable, searchKeyword);
+		find(model, pageable, searchType, searchKeyword);
+		sort = "/sort/view";
 		
 		return "index";
 	}
@@ -59,9 +67,11 @@ public class BoardController {
 	@GetMapping("/sort/recommend")
 	public String indexRecommend(Model model, 
 			@PageableDefault(size = 10, sort = "recommendCount", direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+			@RequestParam(value = "searchType", defaultValue = "title") String searchType,
+			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword) {
 		
-		find(model, pageable, searchKeyword);
+		find(model, pageable, searchType, searchKeyword);
+		sort = "/sort/recommend";
 		
 		return "index";
 	}
@@ -72,12 +82,13 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/{id}")
-	public String detail(@PathVariable Long id,
-			Model model, HttpServletRequest request,
-			HttpServletResponse response,
+	public String detail(@PathVariable Long id, Model model,
+			HttpServletRequest request, HttpServletResponse response,
 			@AuthenticationPrincipal PrincipalDetail principal) {
 		
 		model.addAttribute("board", boardService.detail(id, request, response, principal.getUser().getId()));
+		model.addAttribute("sort", sort);
+		
 		return "board/detail";
 	}
 	

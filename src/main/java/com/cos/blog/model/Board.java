@@ -64,6 +64,8 @@ public class Board {
 	
 	private String userNickname;
 	
+	private String seen;
+	
 	@Transient
 	private Board prev_board;
 	

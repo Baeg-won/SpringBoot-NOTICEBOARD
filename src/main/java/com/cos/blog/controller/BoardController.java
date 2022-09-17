@@ -55,7 +55,7 @@ public class BoardController {
 			HttpServletRequest request, HttpServletResponse response,
 			@AuthenticationPrincipal PrincipalDetail principal,
 			@RequestParam(value = "page", defaultValue = "0") String page,
-			@RequestParam(value = "sort", defaultValue = "id") String sort,
+			@RequestParam(value = "sort", defaultValue = "id,DESC") String sort,
 			@RequestParam(value = "searchType", defaultValue = "title") String searchType,
 			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword) {
 		

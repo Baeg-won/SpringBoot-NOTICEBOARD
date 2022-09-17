@@ -70,6 +70,12 @@ public class BoardService {
 		board.setRecommendCount(board.getRecommends().size());
 		board.setPrev_board(boardRepository.findPrevBoard(id));
 		board.setNext_board(boardRepository.findNextBoard(id));
+		
+		if(board.getSeen() == null) {
+			board.setSeen("[" + principal_id.toString() + "]");
+		} else {
+			board.setSeen(board.getSeen() + "[" + principal_id.toString() + "]");
+		}
 
 		return board;
 	}

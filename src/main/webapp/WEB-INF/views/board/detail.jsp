@@ -84,18 +84,18 @@
 	<br>
 	<div class="list-group">
 		<a href="/board/${board.next_board.id}?page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}"
-			class="list-group-item list-group-item-action <c:if test="${empty board.next_board}">disabled</c:if>"> <span style="font-weight: bold;">이전글</span> │ <c:choose>
+			class="list-group-item list-group-item-action <c:if test="${empty board.next_board}">disabled</c:if>"> <span style="font-weight: bold;">다음글</span> │ <c:choose>
 				<c:when test="${empty board.next_board}">
-					이전글이 없습니다.
+					다음글이 없습니다.
 				</c:when>
 				<c:otherwise>
 					<span style="color: blue;">${board.next_board.title}</span>
 				</c:otherwise>
 			</c:choose>
 		</a> <a href="/board/${board.prev_board.id}?page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}"
-			class="list-group-item list-group-item-action <c:if test="${empty board.prev_board}">disabled</c:if>"> <span style="font-weight: bold;">다음글</span> │ <c:choose>
+			class="list-group-item list-group-item-action <c:if test="${empty board.prev_board}">disabled</c:if>"> <span style="font-weight: bold;">이전글</span> │ <c:choose>
 				<c:when test="${empty board.prev_board}">
-					다음글이 없습니다.
+					이전글이 없습니다.
 				</c:when>
 				<c:otherwise>
 					<span style="color: blue;">${board.prev_board.title}</span>

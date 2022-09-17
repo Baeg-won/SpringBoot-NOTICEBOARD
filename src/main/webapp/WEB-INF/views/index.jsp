@@ -34,7 +34,8 @@
 			</tr>
 		</thead>
 		<c:forEach var="board" items="${boards.content}">
-			<tbody>
+			<c:set var="user" value="[${Integer.toString(principal.user.id)}]" />
+			<tbody style="<c:if test='${fn:contains(board.seen, user)}'>color: gray;</c:if>">
 				<tr onclick="location.href='/board/${board.id}/?page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}&sortType=${param.sortType}'" style="cursor: pointer;">
 					<th>${board.id}</th>
 					<th>${board.title}<c:if test="${fn:length(board.replys) > 0}">

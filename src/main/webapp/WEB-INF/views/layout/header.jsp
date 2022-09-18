@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <sec:authorize access="isAuthenticated()">
-	<sec:authentication property="principal" var="principal"/>
+	<sec:authentication property="principal" var="principal" />
 </sec:authorize>
 
 <!DOCTYPE html>
@@ -20,10 +20,18 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <link href="/css/index.css" rel="stylesheet" type="text/css">
+<script src="https://kit.fontawesome.com/2804b86193.js" crossorigin="anonymous"></script>
+<style>
+	@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+	
+	body {
+		font-family: 'Nanum Gothic', sans-serif;
+	}
+</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-		<a class="navbar-brand" href="/">Home</a>
+		<a class="navbar-brand" href="/"><i class="fa-solid fa-house"></i> Home</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -31,14 +39,14 @@
 			<c:choose>
 				<c:when test="${empty principal}">
 					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" href="/auth/loginForm">Sign in</a></li>
-						<li class="nav-item"><a class="nav-link" href="/auth/joinForm">Sign up</a></li>
+						<li class="nav-item"><a class="nav-link" href="/auth/loginForm"><i class="fa-solid fa-right-to-bracket"></i> Sign in</a></li>
+						<li class="nav-item"><a class="nav-link" href="/auth/joinForm"><i class="fa-solid fa-user-plus"></i> Sign up</a></li>
 					</ul>
 				</c:when>
 				<c:otherwise>
 					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" href="/user/updateForm">Profile</a></li>
-						<li class="nav-item"><a class="nav-link" href="/logout">Sign out</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/updateForm"><i class="fa-solid fa-user"></i> Profile</a></li>
+						<li class="nav-item"><a class="nav-link" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
 					</ul>
 				</c:otherwise>
 			</c:choose>

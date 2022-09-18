@@ -19,7 +19,7 @@
 			</select>
 			<input type="hidden" name="searchType" id="searchType" value="title">
 			<input type="text" name="searchKeyword" id="searchKeyword" class="form-control" placeholder="검색">
-			<button type="submit" class="btn btn-primary">검색</button>
+			<button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> 검색</button>
 		</div>
 	</form>
 	<table class="table table-hover">
@@ -52,7 +52,7 @@
 	</table>
 	<br>
 	<div align="right">
-		<button class="btn btn-info" onclick="location.href='/board/writeForm'">글쓰기</button>
+		<button class="btn btn-info" onclick="location.href='/board/writeForm'"><i class="fa-solid fa-pen"></i> 글쓰기</button>
 	</div>
 	<c:set var="startPage" value="${boards.number - boards.number % 5}" />
 	<ul class="pagination justify-content-center">

@@ -6,15 +6,15 @@
 	<form>
 		<input type="hidden" id="board_id" value="${board.id}">
 		<div class="form-group">
-			<label for="title">Title</label>
+			<label for="title"><i class="fa-solid fa-pen-nib"></i> 제목</label>
 			<input value="${board.title}" type="text" class="form-control" placeholder="Enter title" id="title">
 		</div>
 		<div class="form-group">
-			<label for="content">Content</label>
+			<label for="content"><i class="fa-solid fa-pen-nib"></i> 내용</label>
 			<textarea class="form-control summernote" rows="5" id="content">${board.content}</textarea>
 		</div>
 	</form>
-	<button id="btn-update" class="btn btn-primary">완료</button>
+	<button id="btn-update" class="btn btn-primary"><i class="fa-solid fa-check"></i> 완료</button>
 </div>
 <br>
 

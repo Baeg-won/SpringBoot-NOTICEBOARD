@@ -3,15 +3,18 @@
 <%@ include file="../layout/header.jsp"%>
 
 <div class="container">
-	<button class="btn btn-secondary" onclick="location.href='/?page=${page}&sort=${sort}&searchType=${searchType}&searchKeyword=${searchKeyword}'">List</button>
+	<button class="btn btn-secondary" onclick="location.href='/?page=${page}&sort=${sort}&searchType=${searchType}&searchKeyword=${searchKeyword}'">목록</button>
 	<c:if test="${board.user.id == principal.user.id}">
-		<a href="/board/${board.id}/updateForm" class="btn btn-warning">Edit</a>
-		<button id="btn-delete" class="btn btn-danger">Delete</button>
+	<span style="float: right;">
+		<a href="/board/${board.id}/updateForm" class="btn btn-warning">수정</a>
+		<button id="btn-delete" class="btn btn-danger">삭제</button>
+	</span>
 	</c:if>
-	<br> <br>
-	<div>
-		Created: <span><i>${board.createDate}</i></span><br> Number: <span id="board_id"><i>${board.id}</i></span><br> Writer: <span><i>${board.user.nickname}</i></span><br> Views: <span><i>${board.count}</i></span>
-	</div>
+	<br><br>
+  	작성자: <span>${board.user.nickname}</span><br>
+	작성일: <span>${board.createDate}</span><br>
+	글번호: <span id="board_id">${board.id}</span><br>
+	조회수: <span>${board.count}</span>
 	<hr>
 	<div class="form-group">
 		<h3>${board.title}</h3>
@@ -61,22 +64,23 @@
 			<textarea id="reply-content" class="form-control" rows="1"></textarea>
 		</div>
 		<div class="card-footer">
-			<button id="btn-reply-save" class="btn btn-primary">Write</button>
+			<button id="btn-reply-save" class="btn btn-primary">댓글 등록</button>
 		</div>
 	</div>
 	<br>
 	<div class="card">
-		<div class="card-header">Comments</div>
+		<div class="card-header">댓글 <span style="color: red;">[${fn:length(board.replys)}]</span></div>
 		<ul id="reply-box" class="list-group">
 			<c:forEach var="reply" items="${board.replys}">
-				<li id="reply-${reply.id}" class="list-group-item d-flex justify-content-between">
-					<div>${reply.content}</div>
+				<li id="reply-${reply.id}" class="list-group-item justify-content-between">
 					<div class="d-flex">
-						<div class="font-italic">Writer: ${reply.user.nickname} &nbsp;&nbsp;</div>
-						<c:if test="${reply.user.nickname == principal.user.nickname}">
-							<button onClick="index.replyDelete(${board.id}, ${reply.id})" class="badge">Delete</button>
-						</c:if>
+						<p style="font-weight: bold;">${reply.user.nickname}</p>&nbsp;
+						<span style="font-size: small; color: gray;">(${reply.createDate})</span>
 					</div>
+					<div>${reply.content}</div>
+					<c:if test="${reply.user.nickname == principal.user.nickname}">
+						<button onClick="index.replyDelete(${board.id}, ${reply.id})" class="badge float-right">삭제</button>
+					</c:if>
 				</li>
 			</c:forEach>
 		</ul>

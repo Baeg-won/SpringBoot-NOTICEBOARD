@@ -12,7 +12,7 @@
 			<textarea class="form-control summernote" rows="5" id="content"></textarea>
 		</div>
 	</form>
-	<button id="btn-write" class="btn btn-primary">Save</button>
+	<button id="btn-write" class="btn btn-primary">등록</button>
 </div>
 <br>
 

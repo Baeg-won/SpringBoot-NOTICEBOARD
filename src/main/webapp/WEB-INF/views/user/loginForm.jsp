@@ -19,7 +19,7 @@
 				<p id="valid" class="alert alert-danger">${exception}</p>
 			</c:if>
 		</span>
-		<button id="btn-login" class="btn btn-primary">Login</button>
+		<button id="btn-login" class="btn btn-primary">로그인</button>
 		<a href="https://kauth.kakao.com/oauth/authorize?client_id=51f6c7b1350fbf2b147798b81b8649a7&redirect_uri=http://localhost:8000/auth/kakao/callback&response_type=code"> <img height="38px"
 			src="/image/kakao_login_btn.png" />
 		</a>

@@ -21,7 +21,7 @@
 		</div>
 		<p id="valid_email"></p>
 	</form>
-	<button id="btn-join" class="btn btn-primary">Join</button>
+	<button id="btn-join" class="btn btn-primary">회원가입</button>
 </div>
 <br>
 

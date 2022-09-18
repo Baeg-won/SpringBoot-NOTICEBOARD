@@ -1,6 +1,7 @@
 package com.cos.blog.model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,4 +46,8 @@ public class Reply {
 	
 	@CreationTimestamp
 	private Timestamp create_date;
+	
+	public String getCreateDate() {
+		return new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(create_date);
+	}
 }

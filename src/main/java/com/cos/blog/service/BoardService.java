@@ -98,9 +98,12 @@ public class BoardService {
 	@Transactional
 	public void replyWrite(User user, Long board_id, Reply requestReply) {
 		requestReply.setUser(user);
-		requestReply.setBoard(boardRepository.findById(board_id).orElseThrow(() -> {
+		
+		Board board = boardRepository.findById(board_id).orElseThrow(() -> {
 			return new IllegalArgumentException("댓글 쓰기 실패: 게시글 id를 찾을 수 없습니다.");
-		}));
+		});
+		requestReply.setBoard(board);
+		requestReply.setAlarm_confirm_state(false);
 
 		replyRepository.save(requestReply);
 	}

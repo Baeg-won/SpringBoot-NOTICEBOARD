@@ -3,6 +3,7 @@
 <%@ include file="../layout/header.jsp"%>
 
 <div class="container">
+	<input type="hidden" id="board_id" name="board_id" value="${board.id}"/>
 	<button class="btn btn-secondary" onclick="location.href='/?page=${page}&sort=${sort}&searchType=${searchType}&searchKeyword=${searchKeyword}'"><i class="fa-solid fa-list"></i> 목록</button>
 	<c:if test="${board.user.id == principal.user.id}">
 	<span style="float: right;">
@@ -78,7 +79,7 @@
 				<li id="reply-${reply.id}" class="list-group-item justify-content-between">
 					<div class="d-flex">
 						<p style="font-weight: bold;"><i class="fa-solid fa-user"></i> ${reply.user.nickname}</p>&nbsp;
-						<span style="font-size: small; color: gray;">(${reply.createDate})</span>
+						<span style="font-size: small; color: gray;">(${reply.createDateTime})</span>
 					</div>
 					<div>${reply.content}</div>
 					<c:if test="${reply.user.nickname == principal.user.nickname}">

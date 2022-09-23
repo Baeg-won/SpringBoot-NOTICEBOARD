@@ -44,10 +44,16 @@ public class Reply {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
+	private boolean alarm_confirm_state;
+	
 	@CreationTimestamp
 	private Timestamp create_date;
 	
 	public String getCreateDate() {
+		return new SimpleDateFormat("yyyy.MM.dd").format(create_date);
+	}
+	
+	public String getCreateDateTime() {
 		return new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(create_date);
 	}
 }

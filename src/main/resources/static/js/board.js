@@ -73,7 +73,7 @@ let index = {
 	},
 
 	replySave: function() {
-		let id = $("#board_id").text();
+		let id = $("#board_id").val();
 		let data = {
 			content: $("#reply-content").val()
 		};

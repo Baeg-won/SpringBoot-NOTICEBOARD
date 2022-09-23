@@ -20,13 +20,14 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <link href="/css/index.css" rel="stylesheet" type="text/css">
+<link href="/css/header.css" rel="stylesheet" type="text/css">
 <script src="https://kit.fontawesome.com/2804b86193.js" crossorigin="anonymous"></script>
 <style>
-	@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
-	
-	body {
-		font-family: 'Nanum Gothic', sans-serif;
-	}
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+body {
+	font-family: 'Nanum Gothic', sans-serif;
+}
 </style>
 </head>
 <body>
@@ -51,5 +52,38 @@
 				</c:otherwise>
 			</c:choose>
 		</div>
+		<c:if test="${fn:length(alarms) > 0}">
+			<div class="dropdown">
+				<div style="color: white; position:relative;" class="btn dropdown" data-toggle="dropdown">
+					<i class="fa-solid fa-bell"></i>
+					<c:set var="alarm_count" value="0" />
+					<c:forEach var="alarm" items="${alarms}">
+						<c:if test="${!alarm.alarm_confirm_state}">
+							<c:set var="alarm_count" value="${alarm_count + 1}" />
+						</c:if>
+					</c:forEach>
+					<c:if test="${alarm_count > 0}">
+						<span class="nav-counter">${alarm_count}</span>
+					</c:if>
+				</div>
+				<div class="dropdown-menu dropdown-menu-right alarm-box">
+					<span class="alarm-new">새소식&nbsp;&nbsp;</span><span class="alarm-count">${alarm_count}</span>
+					<c:forEach var="alarm" items="${alarms}">
+						<div class="dropdown-item alarm" onclick="alarmConfirm(${alarm.id}, ${alarm.board.id})" 
+							<c:if test="${alarm.alarm_confirm_state}">, style="background-color: whiteSmoke;"</c:if>
+						>
+							<span style="float: right;">${alarm.createDate}</span>
+							<span>
+								<div class="alarm-content"><span class="alarm-username">${alarm.user.nickname}</span><span>님이 댓글을 남겼습니다.</span></div>
+								<div class="alarm-content">${alarm.content}</div>
+								<div class="alarm-content alarm-title">${alarm.board.title}</div>
+							</span>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</c:if>
 	</nav>
 	<br>
+	
+<script src="/js/alarm.js"></script>

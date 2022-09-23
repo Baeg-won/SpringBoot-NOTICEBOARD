@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.repository.BoardRepository;
+import com.cos.blog.repository.ReplyRepository;
 import com.cos.blog.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class BoardController {
 	private final BoardService boardService;
 	
 	@GetMapping("/")
-	public String index(Model model, 
+	public String index(Model model,  
 			@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
 			@RequestParam(value = "searchType", defaultValue = "title") String searchType,
 			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword) {

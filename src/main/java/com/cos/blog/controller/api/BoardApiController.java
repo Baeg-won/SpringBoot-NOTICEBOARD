@@ -44,8 +44,12 @@ public class BoardApiController {
 	}
 	
 	@PostMapping("/api/board/{board_id}/reply")
-	public ResponseDto<Integer> replyWrite(@PathVariable("board_id") Long id, @RequestBody Reply reply, @AuthenticationPrincipal PrincipalDetail principal) {
+	public ResponseDto<Integer> replyWrite(@PathVariable("board_id") Long id, 
+			@RequestBody Reply reply, 
+			@AuthenticationPrincipal PrincipalDetail principal) {
+		
 		boardService.replyWrite(principal.getUser(), id, reply);
+		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	

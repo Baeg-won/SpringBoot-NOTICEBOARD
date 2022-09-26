@@ -5,20 +5,26 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.dto.UserRequestDto;
+import com.cos.blog.model.User;
 import com.cos.blog.service.UserService;
 import com.cos.blog.validator.CheckEmailValidator;
 import com.cos.blog.validator.CheckNicknameValidator;
@@ -65,5 +71,12 @@ public class UserApiController {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
+	
+	@PutMapping("/api/user/{user_id}/profileImageUrl")
+	public ResponseDto<?> profileImageUpdate(@PathVariable Long user_id, MultipartFile profileImageFile, @AuthenticationPrincipal PrincipalDetail principalDetail) {
+		userService.profileImageUpdate(user_id, profileImageFile);
+		
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); 
 	}
 }

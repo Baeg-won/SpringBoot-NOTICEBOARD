@@ -53,6 +53,8 @@ public class User {
 	
 	private String oauth;
 	
+	private String profile_image_url;
+	
 	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
 	private List<Board> boards = new ArrayList<>();

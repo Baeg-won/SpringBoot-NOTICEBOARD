@@ -1,5 +1,6 @@
 package com.cos.blog.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 
 import com.cos.blog.config.auth.PrincipalDetailService;
 import com.cos.blog.interceptor.NotificationInterceptor;
@@ -28,6 +31,9 @@ public class SecurityConfig implements WebMvcConfigurer {
 	private final PrincipalDetailService principalDetailService;
 	private final AuthenticationFailureHandler userLoginFailHandler;
     private final NotificationInterceptor notificationInterceptor;
+    
+	@Value("${file.path}")
+	private String uploadFolder;
 	
 	@Bean
 	public BCryptPasswordEncoder encodePWD() {
@@ -49,6 +55,18 @@ public class SecurityConfig implements WebMvcConfigurer {
         registry.addInterceptor(notificationInterceptor)
                 .excludePathPatterns("/js/**", "/css/**", "/image/**");
     }
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		WebMvcConfigurer.super.addResourceHandlers(registry);
+		
+		registry
+			.addResourceHandler("/upload/**")	//jsp 페이지에서 '/upload/**'와 같은 주소 패턴이 요청되면 실행
+			.addResourceLocations("file:///" + uploadFolder)
+			.setCachePeriod(60 * 10 * 6)	//1시간
+			.resourceChain(true)
+			.addResolver(new PathResourceResolver());
+	}
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

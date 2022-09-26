@@ -2,6 +2,7 @@
 
 <%@ include file="../layout/header.jsp"%>
 
+<br>
 <div class="container">
 	<input type="hidden" id="board_id" name="board_id" value="${board.id}"/>
 	<button class="btn btn-secondary" onclick="location.href='/?page=${page}&sort=${sort}&searchType=${searchType}&searchKeyword=${searchKeyword}'"><i class="fa-solid fa-list"></i> 목록</button>
@@ -13,7 +14,7 @@
 	</c:if>
 	<br><br>
 	<div class="d-flex justify-content-between">
-		<span><i class="fa-solid fa-user"></i> ${board.user.nickname}</span><br>
+		<span><img class="rounded-circle" src="/upload/${board.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30"> ${board.user.nickname}</span><br>
 		<span>
 			<i class="fa-solid fa-calendar-days"></i> ${board.createDate} &nbsp;&nbsp;
 			<i class="fa-solid fa-eye"></i> ${board.count} &nbsp;&nbsp;
@@ -78,7 +79,16 @@
 			<c:forEach var="reply" items="${board.replys}">
 				<li id="reply-${reply.id}" class="list-group-item justify-content-between">
 					<div class="d-flex">
-						<p style="font-weight: bold;"><i class="fa-solid fa-user"></i> ${reply.user.nickname}</p>&nbsp;
+						<p style="font-weight: bold;">
+							<c:choose>
+								<c:when test="${not empty reply.user.profile_image_url}">
+									<img class="rounded-circle" src="/upload/${board.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30">
+								</c:when>
+								<c:otherwise>
+									<img class="rounded-circle" src="/image/profile.jpg" width="30" height="30">
+								</c:otherwise>
+							</c:choose>
+						&nbsp;${reply.user.nickname}</p>&nbsp;
 						<span style="font-size: small; color: gray;">(${reply.createDateTime})</span>
 					</div>
 					<div>${reply.content}</div>

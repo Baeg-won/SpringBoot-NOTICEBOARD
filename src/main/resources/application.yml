@@ -33,6 +33,14 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+  
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2MB
       
 secrect:
-  key: eornjs1449.
+  key: eornjs1449. 
+
+file:
+  path: D:/workspace/springboot/upload/

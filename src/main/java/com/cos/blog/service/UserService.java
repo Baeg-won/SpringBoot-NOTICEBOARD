@@ -1,7 +1,11 @@
 package com.cos.blog.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -21,6 +25,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cos.blog.dto.UserRequestDto;
 import com.cos.blog.model.KakaoProfile;
@@ -44,6 +49,9 @@ public class UserService {
 	
 	@Value("${secrect.key}")
 	private String secrectKey;
+	
+	@Value("${file.path}")
+	private String uploadFolder;
 
 	@Transactional
 	public void join(UserRequestDto userDto) {
@@ -173,5 +181,24 @@ public class UserService {
 		Authentication authentication = 
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoUser.getUsername(), secrectKey));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
+	
+	@Transactional
+	public void profileImageUpdate(Long user_id, MultipartFile profileImageFile) {
+		UUID uuid = UUID.randomUUID();
+		String imageFileName = uuid + "_" + profileImageFile.getOriginalFilename();
+		Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+		
+		try {
+			Files.write(imageFilePath, profileImageFile.getBytes());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		User user = userRepository.findById(user_id).orElseThrow(() -> {
+			return new IllegalArgumentException("프로필 이미지 수정 실패: 존재하지 않는 회원입니다.");
+		});
+		
+		user.setProfile_image_url(imageFileName);
 	}
 }

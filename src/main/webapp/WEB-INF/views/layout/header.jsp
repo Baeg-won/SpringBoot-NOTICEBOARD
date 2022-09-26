@@ -74,6 +74,14 @@ body {
 						>
 							<span style="float: right;">${alarm.createDate}</span>
 							<span>
+								<c:choose>
+									<c:when test="${not empty reply.user.profile_image_url}">
+										<img class="rounded-circle" src="/upload/${board.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30">
+									</c:when>
+									<c:otherwise>
+										<img class="rounded-circle" src="/image/profile.jpg" width="30" height="30">
+									</c:otherwise>
+								</c:choose>
 								<div class="alarm-content"><span class="alarm-username">${alarm.user.nickname}</span><span>님이 댓글을 남겼습니다.</span></div>
 								<div class="alarm-content">${alarm.content}</div>
 								<div class="alarm-content alarm-title">${alarm.board.title}</div>
@@ -84,6 +92,5 @@ body {
 			</div>
 		</c:if>
 	</nav>
-	<br>
 	
 <script src="/js/alarm.js"></script>

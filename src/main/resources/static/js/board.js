@@ -1,4 +1,4 @@
-let index = {
+let index_board = {
 	init: function() {
 		$("#btn-write").on("click", () => {
 			this.write();
@@ -136,7 +136,7 @@ let index = {
 	}
 }
 
-index.init();
+index_board.init();
 
 function selectSearchType() {
 	$("#searchType").val($("#select option:selected").val())

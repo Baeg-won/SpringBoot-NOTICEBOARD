@@ -72,20 +72,28 @@ body {
 						<div class="dropdown-item alarm" onclick="alarmConfirm(${alarm.id}, ${alarm.board.id})" 
 							<c:if test="${alarm.alarm_confirm_state}">, style="background-color: whiteSmoke;"</c:if>
 						>
-							<span style="float: right;">${alarm.createDate}</span>
-							<span>
-								<c:choose>
-									<c:when test="${not empty reply.user.profile_image_url}">
-										<img class="rounded-circle" src="/upload/${board.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30">
-									</c:when>
-									<c:otherwise>
-										<img class="rounded-circle" src="/image/profile.jpg" width="30" height="30">
-									</c:otherwise>
-								</c:choose>
-								<div class="alarm-content"><span class="alarm-username">${alarm.user.nickname}</span><span>님이 댓글을 남겼습니다.</span></div>
-								<div class="alarm-content">${alarm.content}</div>
-								<div class="alarm-content alarm-title">${alarm.board.title}</div>
-							</span>
+							<table>
+								<tr>
+									<td rowspan="3" style="padding-right: 15px;">
+										<c:choose>
+											<c:when test="${not empty alarm.user.profile_image_url}">
+												<img class="rounded-circle" src="/upload/${alarm.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="50" height="50">
+											</c:when>
+											<c:otherwise>
+												<img class="rounded-circle" src="/image/profile.jpg" width="50" height="50">
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td><div class="alarm-content"><span class="alarm-username">${alarm.user.nickname}</span>님이 댓글을 남겼습니다.</div></td>
+									<td rowspan="3" valign="top">${alarm.createDate}</td>
+								</tr>
+								<tr>
+									<td><div class="alarm-content">${alarm.content}</div></td>
+								</tr>
+								<tr>
+									<td class="alarm-content alarm-title">${alarm.board.title}</td>
+								</tr>
+							</table>
 						</div>
 					</c:forEach>
 				</div>

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.cos.blog.model.Board;
+import com.cos.blog.model.CategoryType;
 
 // @Repository
 public interface BoardRepository extends JpaRepository<Board, Long>{
@@ -17,6 +18,7 @@ public interface BoardRepository extends JpaRepository<Board, Long>{
 	
 	Page<Board> findByTitleContaining(String searchKeyword, Pageable pageable);
 	Page<Board> findByUserNicknameContaining(String searchKeyword, Pageable pageable);
+	Page<Board> findAllByCategory(CategoryType category, Pageable pageable);
 	
 	@Query(value = "SELECT * FROM board "
 			+ "WHERE id = (SELECT prev_no FROM (SELECT id, LAG(id, 1, -1) OVER(ORDER BY id) AS prev_no FROM board) B "

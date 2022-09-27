@@ -19,6 +19,7 @@ let index_board = {
 
 	write: function() {
 		let data = {
+			category: $("#category option:selected").val(),
 			title: $("#title").val(),
 			content: $("#content").val()
 		};

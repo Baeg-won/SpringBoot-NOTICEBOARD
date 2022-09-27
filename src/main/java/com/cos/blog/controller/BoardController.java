@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cos.blog.config.auth.PrincipalDetail;
+import com.cos.blog.model.CategoryType;
 import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.repository.ReplyRepository;
 import com.cos.blog.service.BoardService;
@@ -30,8 +31,14 @@ public class BoardController {
 	@GetMapping("/")
 	public String index(Model model,  
 			@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+			@RequestParam(value = "category", defaultValue = "none") String category,
 			@RequestParam(value = "searchType", defaultValue = "title") String searchType,
 			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword) {
+		
+		if(category.equals("screenshot")) {
+			model.addAttribute("boards", boardRepository.findAllByCategory(CategoryType.SCREENSHOT, pageable));
+			return "index";
+		}
 		
 		if(searchKeyword == null || searchKeyword.isBlank()) {
 			model.addAttribute("boards", boardRepository.findAll(pageable));

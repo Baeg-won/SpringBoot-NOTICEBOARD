@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.config.auth.PrincipalDetail;
+import com.cos.blog.dto.BoardWriteDto;
 import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.model.Board;
 import com.cos.blog.model.Reply;
@@ -26,8 +27,8 @@ public class BoardApiController {
 	private final RecommendService recommendService;
 
 	@PostMapping("/api/board")
-	public ResponseDto<Integer> write(@RequestBody Board board, @AuthenticationPrincipal PrincipalDetail principal) {
-		boardService.write(board, principal.getUser());
+	public ResponseDto<Integer> write(@RequestBody BoardWriteDto boardWriteDto, @AuthenticationPrincipal PrincipalDetail principal) {
+		boardService.write(boardWriteDto, principal.getUser());
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	

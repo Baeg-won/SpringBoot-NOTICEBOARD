@@ -3,8 +3,10 @@ package com.cos.blog.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cos.blog.config.auth.PrincipalDetail;
-import com.cos.blog.model.CategoryType;
+import com.cos.blog.model.Board;
 import com.cos.blog.repository.BoardRepository;
-import com.cos.blog.repository.ReplyRepository;
 import com.cos.blog.service.BoardService;
+import com.cos.blog.specification.BoardSpecification;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,24 +33,46 @@ public class BoardController {
 	@GetMapping("/")
 	public String index(Model model,  
 			@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(value = "category", defaultValue = "none") String category,
-			@RequestParam(value = "searchType", defaultValue = "title") String searchType,
-			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword) {
+			@RequestParam(value = "category", defaultValue = "") String category,
+			@RequestParam(value = "searchType", defaultValue = "") String searchType,
+			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 		
-		if(category.equals("screenshot")) {
-			model.addAttribute("boards", boardRepository.findAllByCategory(CategoryType.SCREENSHOT, pageable));
-			return "index";
+		Specification<Board> spec = (root, query, criteriaBuilder) -> null;
+		
+		if(!category.isEmpty()) {
+			if(category.equals("popular")) {
+				spec = spec.and(BoardSpecification.recGreaterThan(30));
+			} else {
+				spec = spec.and(BoardSpecification.equalCategory(category));
+			}
+			
+			if(category.equals("screenshot")) {
+				pageable = PageRequest.of(0, 12);
+			}
+		}
+		if(!searchType.isEmpty()) {
+			if(searchType.equals("title")) {	
+				spec = spec.and(BoardSpecification.searchTypeTitle(searchKeyword));
+			} else {
+				spec = spec.and(BoardSpecification.searchTypeWriter(searchKeyword));
+			}
 		}
 		
-		if(searchKeyword == null || searchKeyword.isBlank()) {
-			model.addAttribute("boards", boardRepository.findAll(pageable));
-		}
+		model.addAttribute("boards", boardRepository.findAll(spec, pageable));
 		
-		if(searchType.equals("nickname")) {
-			model.addAttribute("boards", boardRepository.findByUserNicknameContaining(searchKeyword, pageable));
-		} else {
-			model.addAttribute("boards", boardRepository.findByTitleContaining(searchKeyword, pageable));
-		}
+		/*
+		 * if(category.equals("screenshot")) { model.addAttribute("boards",
+		 * boardRepository.findAllByCategory(CategoryType.SCREENSHOT, pageable)); return
+		 * "index"; }
+		 * 
+		 * if(searchKeyword == null || searchKeyword.isBlank()) {
+		 * model.addAttribute("boards", boardRepository.findAll(pageable)); }
+		 * 
+		 * if(searchType.equals("nickname")) { model.addAttribute("boards",
+		 * boardRepository.findByUserNicknameContaining(searchKeyword, pageable)); }
+		 * else { model.addAttribute("boards",
+		 * boardRepository.findByTitleContaining(searchKeyword, pageable)); }
+		 */
 		
 		return "index";
 	}
@@ -62,12 +86,14 @@ public class BoardController {
 	public String detail(@PathVariable Long id, Model model,
 			HttpServletRequest request, HttpServletResponse response,
 			@AuthenticationPrincipal PrincipalDetail principal,
+			@RequestParam(value = "category", defaultValue = "") String category,
 			@RequestParam(value = "page", defaultValue = "0") String page,
 			@RequestParam(value = "sort", defaultValue = "id,DESC") String sort,
 			@RequestParam(value = "searchType", defaultValue = "title") String searchType,
 			@RequestParam(value = "searchKeyword", defaultValue = "") String searchKeyword) {
 		
 		model.addAttribute("board", boardService.detail(id, request, response, principal.getUser().getId()));
+		model.addAttribute("category", category);
 		model.addAttribute("page", page);
 		model.addAttribute("sort", sort);
 		model.addAttribute("searchType", searchType);

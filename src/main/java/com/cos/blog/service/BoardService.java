@@ -4,13 +4,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.maven.model.Build;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.blog.dto.BoardWriteDto;
 import com.cos.blog.model.Board;
-import com.cos.blog.model.CategoryType;
 import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
@@ -33,13 +31,8 @@ public class BoardService {
 				.user(user)
 				.count(0)
 				.userNickname(user.getNickname())
+				.category(boardWriteDto.getCategory())
 				.build();
-		
-		if(boardWriteDto.getCategory().equals("none")) {
-			board.setCategory(CategoryType.NONE);
-		} else if(boardWriteDto.getCategory().equals("screenshot")) {
-			board.setCategory(CategoryType.SCREENSHOT);
-		}
 		
 		boardRepository.save(board);
 	}

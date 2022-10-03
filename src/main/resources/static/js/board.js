@@ -115,7 +115,7 @@ let index_board = {
 			}).done(resp => {
 				recommend.removeClass("btn-outline-success");
 				recommend.addClass("btn-success");
-				
+
 				location.reload();
 			}).fail(error => {
 				console.log(error);
@@ -128,7 +128,7 @@ let index_board = {
 			}).done(resp => {
 				recommend.removeClass("btn-success");
 				recommend.addClass("btn-outline-success");
-				
+
 				location.reload();
 			}).fail(error => {
 				console.log(error);

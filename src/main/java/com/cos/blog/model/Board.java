@@ -68,8 +68,7 @@ public class Board {
 	
 	private String seen;
 	
-	@Enumerated(EnumType.STRING)
-	private CategoryType category;
+	private String category;
 	
 	@Transient
 	private Board prev_board;

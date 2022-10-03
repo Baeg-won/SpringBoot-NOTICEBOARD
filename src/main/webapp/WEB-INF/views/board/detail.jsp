@@ -5,7 +5,7 @@
 <br>
 <div class="container">
 	<input type="hidden" id="board_id" name="board_id" value="${board.id}"/>
-	<button class="btn btn-secondary" onclick="location.href='/?page=${page}&sort=${sort}&searchType=${searchType}&searchKeyword=${searchKeyword}'"><i class="fa-solid fa-list"></i> 목록</button>
+	<button class="btn btn-secondary" onclick="location.href='/?category=${category}&page=${page}&sort=${sort}&searchType=${searchType}&searchKeyword=${searchKeyword}'"><i class="fa-solid fa-list"></i> 목록</button>
 	<c:if test="${board.user.id == principal.user.id}">
 	<span style="float: right;">
 		<a href="/board/${board.id}/updateForm" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> 수정</a>

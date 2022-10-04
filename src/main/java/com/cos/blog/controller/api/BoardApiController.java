@@ -1,5 +1,15 @@
 package com.cos.blog.controller.api;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
+
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -7,7 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.dto.BoardWriteDto;
@@ -16,6 +29,7 @@ import com.cos.blog.model.Board;
 import com.cos.blog.model.Reply;
 import com.cos.blog.service.BoardService;
 import com.cos.blog.service.RecommendService;
+import com.google.gson.JsonObject;
 
 import lombok.RequiredArgsConstructor;
 
@@ -70,5 +84,50 @@ public class BoardApiController {
 	public ResponseDto<Integer> cancelRecommend(@PathVariable("board_id") Long board_id, @AuthenticationPrincipal PrincipalDetail principal) {
 		recommendService.cancelRecommend(board_id, principal.getUser().getId());
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
+	
+	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
+	@ResponseBody
+	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+		
+		JsonObject jsonObject = new JsonObject();
+		
+		String fileRoot = "D:\\workspace\\springboot\\upload\\";	//저장될 외부 파일 경로
+		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+				
+		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		
+		File targetFile = new File(fileRoot + savedFileName);	
+		
+		try {
+			InputStream fileStream = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+			jsonObject.addProperty("url", "/upload/" + savedFileName);
+			jsonObject.addProperty("filename", savedFileName);
+			jsonObject.addProperty("responseCode", "success");
+			
+			File thumbnailFile = new File(fileRoot, "s_" + savedFileName);
+			
+			BufferedImage bo_image = ImageIO.read(targetFile);
+			
+			double ratio = 3;
+			int width = (int) (bo_image.getWidth() / ratio);
+			int height = (int) (bo_image.getHeight() / ratio);
+			
+			BufferedImage bt_image = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+							
+			Graphics2D graphic = bt_image.createGraphics();
+			
+			graphic.drawImage(bo_image, 0, 0,width, height, null);
+				
+			ImageIO.write(bt_image, "jpg", thumbnailFile);
+		} catch (IOException e) {
+			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+			jsonObject.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}
+		
+		return jsonObject;
 	}
 }

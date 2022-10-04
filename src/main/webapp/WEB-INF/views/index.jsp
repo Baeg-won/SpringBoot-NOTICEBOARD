@@ -51,15 +51,33 @@
 			<c:when test="${param.category eq 'screenshot'}">
 				<hr>
 				<div class="row justify-content-center">
+					<script>
+						let content, erase, img, div, doc;
+						var parser = new DOMParser();
+					</script>
 					<c:forEach var="board" items="${boards.content}">
-						<div class="card" style="width: 180px; margin: 5px; height: 290px;">
-							${board.content}
+						<div id="${board.id}" class="card" style="width: 180px; margin: 5px; height: 290px;">
+							<script>
+						    	content = '${board.content}';
+							    doc = parser.parseFromString(content, 'text/html');
+							    
+							    img = document.createElement('img');
+							    img.setAttribute("src", "image/no-image.jpg");
+							    if(doc.getElementsByTagName('img')[0] != null) {
+							    	img.setAttribute("src", doc.getElementsByTagName('img')[0].src);	
+							    }
+							    img.setAttribute("width", 178.2);
+							    img.setAttribute("height", 170);
+							    
+							    div = document.getElementById('${board.id}');
+							    div.appendChild(img);
+							</script>
 							<div class="card-body">
 								<div class="card-title" style="font-weight: bold;">${board.title}</div>
 								<div class="card-text" style="font-size: small; margin-bottom: 2px;">${board.user.nickname}</div>
 								<div class="justify-content-between" style="display: flex;">
-									<div style="font-size: small;">${board.count}</div>
-									<div style="font-size: small;">${board.recommendCount}</div>
+									<div style="font-size: small;"><i class="fa-solid fa-eye"></i> ${board.count}</div>
+									<div style="font-size: small;"><i class="fa-solid fa-thumbs-up"></i> ${board.recommendCount}</div>
 								</div>
 							</div>
 						</div>

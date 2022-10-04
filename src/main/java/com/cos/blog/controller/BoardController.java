@@ -32,7 +32,7 @@ public class BoardController {
 	
 	@GetMapping("/")
 	public String index(Model model,  
-			@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+			@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
 			@RequestParam(value = "category", defaultValue = "") String category,
 			@RequestParam(value = "searchType", defaultValue = "") String searchType,
 			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
@@ -44,10 +44,6 @@ public class BoardController {
 				spec = spec.and(BoardSpecification.recGreaterThan(30));
 			} else {
 				spec = spec.and(BoardSpecification.equalCategory(category));
-			}
-			
-			if(category.equals("screenshot")) {
-				pageable = PageRequest.of(0, 12);
 			}
 		}
 		if(!searchType.isEmpty()) {

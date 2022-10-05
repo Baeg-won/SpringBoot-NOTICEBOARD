@@ -7,7 +7,9 @@
 	<form>
 		<select id="category" class="form-control">
 			<option value="none">자유게시판</option>
+			<option value="secret">비밀게시판</option>
 			<option value="screenshot">스크린샷 게시판</option>
+			<option value="question">질문과 답변</option>
 		</select><br>
 		<div class="form-group">
 			<label for="title"><i class="fa-solid fa-pen-nib"></i> 제목</label> <input type="text" class="form-control" placeholder="Enter title" id="title">

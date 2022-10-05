@@ -119,7 +119,7 @@ public class BoardApiController {
 							
 			Graphics2D graphic = bt_image.createGraphics();
 			
-			graphic.drawImage(bo_image, 0, 0,width, height, null);
+			graphic.drawImage(bo_image, 0, 0, width, height, null);
 				
 			ImageIO.write(bt_image, "jpg", thumbnailFile);
 		} catch (IOException e) {

@@ -23,6 +23,11 @@ let index_board = {
 			title: $("#title").val(),
 			content: $("#content").val()
 		};
+		
+		if(!data.title || !data.content || data.title.trim() == '') {
+			alert("글 제목과 내용을 작성해주세요.");
+			return;
+		}
 
 		$.ajax({
 			type: "POST",
@@ -39,7 +44,7 @@ let index_board = {
 	},
 
 	deleteById: function() {
-		let id = $("#board_id").text();
+		let id = $("#board_id").val();
 
 		$.ajax({
 			type: "DELETE",

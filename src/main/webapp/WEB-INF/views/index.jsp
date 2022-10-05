@@ -10,7 +10,7 @@
 		<c:choose>
 			<c:when test="${not empty principal}">
 				<img id="userProfileImage" src="/upload/${principal.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" class="rounded-circle profile"
-					onclick="profileImageUpload(${principal.user.id})">
+					onclick="profileImageUpload(${principal.user.id})" style="cursor: pointer;">
 				<div style="font-weight: bold;">${principal.user.nickname}</div>
 			</c:when>
 			<c:otherwise>
@@ -20,7 +20,7 @@
 		</c:choose>
 		<br>
 		<ul class="category-ul">
-			<li class="category-li" onclick="location.href='/'"><i class="fa-solid fa-link"></i>&nbsp;&nbsp; 자유게시판</li>
+			<li class="category-li" onclick="location.href='/?category=none'"><i class="fa-solid fa-link"></i>&nbsp;&nbsp; 자유게시판</li>
 			<li class="category-li" onclick="location.href='/?category=popular'"><i class="fa-solid fa-link"></i>&nbsp;&nbsp; 인기게시판</li>
 			<li class="category-li" onclick="location.href='/?category=secret'"><i class="fa-solid fa-link"></i>&nbsp;&nbsp; 비밀게시판</li>
 			<li class="category-li" onclick="location.href='/?category=screenshot'"><i class="fa-solid fa-link"></i>&nbsp;&nbsp; 스크린샷 게시판</li>
@@ -51,29 +51,48 @@
 			<c:when test="${param.category eq 'screenshot'}">
 				<hr>
 				<div class="row justify-content-center">
+				
+					<!-- 스크린샷 게시판 썸네일 설정 변수 -->
 					<script>
-						let content, erase, img, div, doc;
-						var parser = new DOMParser();
+						let content, doc, wrap, img, src, div;
+						let parser = new DOMParser();
 					</script>
+					<!-- 스크린샷 게시판 썸네일 설정 변수 끝 -->
+					
 					<c:forEach var="board" items="${boards.content}">
-						<div id="${board.id}" class="card" style="width: 180px; margin: 5px; height: 290px;">
+						<div id="${board.id}" class="card div-screenshot" onclick="location.href='/board/${board.id}/?category=${param.category}&page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}&sortType=${param.sortType}'">
+						
+							<!-- 스크린샷 게시판 썸네일 설정 -->
 							<script>
 						    	content = '${board.content}';
 							    doc = parser.parseFromString(content, 'text/html');
 							    
+							    wrap = document.createElement('div');
+							    wrap.setAttribute("id", "wrap-${board.id}")
+							    wrap.setAttribute("class", "wrap")
+							    
 							    img = document.createElement('img');
 							    img.setAttribute("src", "image/no-image.jpg");
 							    if(doc.getElementsByTagName('img')[0] != null) {
-							    	img.setAttribute("src", doc.getElementsByTagName('img')[0].src);	
+							    	src = doc.getElementsByTagName('img')[0].src;
+							    	src = src.replace('http://localhost:8000/upload/', 'http://localhost:8000/upload/s_');
+							    	img.setAttribute("src", src);
 							    }
-							    img.setAttribute("width", 178.2);
-							    img.setAttribute("height", 170);
+							    img.setAttribute("class", "thumnail");
 							    
 							    div = document.getElementById('${board.id}');
-							    div.appendChild(img);
+							    wrap.appendChild(img);
+							    div.appendChild(wrap);
 							</script>
+							<!-- 스크린샷 게시판 썸네일 설정 끝 -->
+							
 							<div class="card-body">
-								<div class="card-title" style="font-weight: bold;">${board.title}</div>
+								<div style="display: flex;">
+									<div class="card-title screenshot-card-title">${board.title}</div>
+									<c:if test="${fn:length(board.replys) > 0}">
+										<div style="color: red;">&nbsp;[${fn:length(board.replys)}]</div>
+									</c:if>
+								</div>
 								<div class="card-text" style="font-size: small; margin-bottom: 2px;">${board.user.nickname}</div>
 								<div class="justify-content-between" style="display: flex;">
 									<div style="font-size: small;"><i class="fa-solid fa-eye"></i> ${board.count}</div>
@@ -85,7 +104,7 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<table class="table table-hover">
+				<table class="table table-hover" style="table-layout: fixed;">
 					<thead>
 						<tr>
 							<th style="font-weight: bold;">번호</th>

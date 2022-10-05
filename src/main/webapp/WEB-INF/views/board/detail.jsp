@@ -14,7 +14,14 @@
 	</c:if>
 	<br><br>
 	<div class="d-flex justify-content-between">
-		<span><img class="rounded-circle" src="/upload/${board.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30"> ${board.user.nickname}</span><br>
+		<c:choose>
+			<c:when test="${board.category eq 'secret'}">
+				<span><i class="fa-solid fa-user"></i> 익명</span><br>
+			</c:when>
+			<c:otherwise>
+				<span><img class="rounded-circle" src="/upload/${board.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30"> ${board.user.nickname}</span><br>
+			</c:otherwise>
+		</c:choose>
 		<span>
 			<i class="fa-solid fa-calendar-days"></i> ${board.createDate} &nbsp;&nbsp;
 			<i class="fa-solid fa-eye"></i> ${board.count} &nbsp;&nbsp;
@@ -81,15 +88,16 @@
 					<div class="d-flex">
 						<p style="font-weight: bold;">
 							<c:choose>
-								<c:when test="${not empty reply.user.profile_image_url}">
-									<img class="rounded-circle" src="/upload/${board.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30">
+								<c:when test="${board.category eq 'secret'}">
+									<p><i class="fa-solid fa-user"></i> 익명</p>							
 								</c:when>
 								<c:otherwise>
-									<img class="rounded-circle" src="/image/profile.jpg" width="30" height="30">
+									<img class="rounded-circle" src="/upload/${reply.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30">&nbsp;&nbsp;${reply.user.nickname}
 								</c:otherwise>
 							</c:choose>
-						&nbsp;${reply.user.nickname}</p>&nbsp;
-						<span style="font-size: small; color: gray;">(${reply.createDateTime})</span>
+						</p>
+						&nbsp;
+						<div style="font-size: small; color: gray; padding-top: 3px;">(${reply.createDateTime})</div>
 					</div>
 					<div>${reply.content}</div>
 					<c:if test="${reply.user.nickname == principal.user.nickname}">

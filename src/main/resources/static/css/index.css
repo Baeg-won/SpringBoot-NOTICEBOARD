@@ -73,3 +73,30 @@ html, body {
 .category-li:hover {
 	background: silver;
 }
+
+.div-screenshot {
+	width: 180px;
+	margin: 5px; 
+	height: 290px; 
+	cursor: pointer;	
+}
+
+.wrap {
+	width:178.2px;
+    height:180px;
+    overflow:hidden;
+    margin:0 auto;
+}
+
+.thumnail {
+	width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.screenshot-card-title {
+	font-weight: bold; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	white-space: nowrap;
+}

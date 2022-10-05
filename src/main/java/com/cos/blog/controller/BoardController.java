@@ -33,7 +33,7 @@ public class BoardController {
 	@GetMapping("/")
 	public String index(Model model,  
 			@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-			@RequestParam(value = "category", defaultValue = "") String category,
+			@RequestParam(value = "category", defaultValue = "none") String category,
 			@RequestParam(value = "searchType", defaultValue = "") String searchType,
 			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 		
@@ -82,7 +82,7 @@ public class BoardController {
 	public String detail(@PathVariable Long id, Model model,
 			HttpServletRequest request, HttpServletResponse response,
 			@AuthenticationPrincipal PrincipalDetail principal,
-			@RequestParam(value = "category", defaultValue = "") String category,
+			@RequestParam(value = "category", defaultValue = "none") String category,
 			@RequestParam(value = "page", defaultValue = "0") String page,
 			@RequestParam(value = "sort", defaultValue = "id,DESC") String sort,
 			@RequestParam(value = "searchType", defaultValue = "title") String searchType,

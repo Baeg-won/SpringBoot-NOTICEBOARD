@@ -118,8 +118,7 @@ let index_board = {
 				url: `/api/board/${board_id}/recommend`,
 				dataType: "json"
 			}).done(resp => {
-				recommend.removeClass("btn-outline-success");
-				recommend.addClass("btn-success");
+				recommend.removeClass("btn-outline-recommend");
 
 				location.reload();
 			}).fail(error => {
@@ -131,8 +130,7 @@ let index_board = {
 				url: `/api/board/${board_id}/recommend`,
 				dataType: "json"
 			}).done(resp => {
-				recommend.removeClass("btn-success");
-				recommend.addClass("btn-outline-success");
+				recommend.addClass("btn-outline-recommend");
 
 				location.reload();
 			}).fail(error => {

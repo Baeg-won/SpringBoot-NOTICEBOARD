@@ -5,11 +5,11 @@
 <br>
 <div class="container">
 	<input type="hidden" id="board_id" name="board_id" value="${board.id}"/>
-	<button class="btn btn-secondary" onclick="location.href='/?category=${category}&page=${page}&sort=${sort}&searchType=${searchType}&searchKeyword=${searchKeyword}'"><i class="fa-solid fa-list"></i> 목록</button>
+	<button class="btn btn-list" onclick="location.href='/?category=${category}&page=${page}&sort=${sort}&searchType=${searchType}&searchKeyword=${searchKeyword}'"><i class="fa-solid fa-list"></i> 목록</button>
 	<c:if test="${board.user.id == principal.user.id}">
 	<span style="float: right;">
-		<a href="/board/${board.id}/updateForm" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i> 수정</a>
-		<button id="btn-delete" class="btn btn-danger"><i class="fa-solid fa-trash"></i> 삭제</button>
+		<a href="/board/${board.id}/updateForm" class="btn btn-retouch"><i class="fa-solid fa-pen-to-square"></i> 수정</a>
+		<button id="btn-delete" class="btn btn-delete"><i class="fa-solid fa-trash"></i> 삭제</button>
 	</span>
 	</c:if>
 	<br><br>
@@ -39,30 +39,21 @@
 	<c:choose>
 		<c:when test="${board.recommend_state}">
 			<div style="text-align: center;">
-				<c:choose>
-					<c:when test="${board.user.id != principal.user.id}">
-						<button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-success" style="display: inline-block;">
-							<i class="fa-regular fa-thumbs-up"></i> 추천 <span>${board.recommendCount}</span>
-						</button>
-					</c:when>
-					<c:otherwise>
-						<button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-success" style="display: inline-block;" disabled>
-							<i class="fa-regular fa-thumbs-up"></i> 추천 <span>${board.recommendCount}</span>
-						</button>
-					</c:otherwise>
-				</c:choose>
+				<button onClick="index_board.recommend(${board.id}, ${board.recommend_state})" class="btn btn-recommend" style="display: inline-block;">
+					<i class="fa-regular fa-thumbs-up"></i> 추천 <span>${board.recommendCount}</span>
+				</button>
 			</div>
 		</c:when>
 		<c:otherwise>
 			<div style="text-align: center;">
 				<c:choose>
 					<c:when test="${board.user.id != principal.user.id}">
-						<button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-outline-success" style="display: inline-block;">
+						<button onClick="index_board.recommend(${board.id}, ${board.recommend_state})" class="btn btn-recommend btn-outline-recommend" style="display: inline-block;">
 							<i class="fa-regular fa-thumbs-up"></i> 추천 <span>${board.recommendCount}</span>
 						</button>
 					</c:when>
 					<c:otherwise>
-						<button onClick="index.recommend(${board.id}, ${board.recommend_state})" class="btn btn-outline-success" style="display: inline-block;" disabled>
+						<button onClick="index_board.recommend(${board.id}, ${board.recommend_state})" class="btn btn-recommend btn-outline-recommend" style="display: inline-block;" disabled>
 							<i class="fa-regular fa-thumbs-up"></i> 추천 <span>${board.recommendCount}</span>
 						</button>
 					</c:otherwise>
@@ -76,7 +67,7 @@
 			<textarea id="reply-content" class="form-control" rows="1"></textarea>
 		</div>
 		<div class="card-footer">
-			<button id="btn-reply-save" class="btn btn-primary"><i class="fa-solid fa-check"></i> 등록</button>
+			<button id="btn-reply-save" class="btn btn-comment"><i class="fa-solid fa-check"></i> 등록</button>
 		</div>
 	</div>
 	<br>

@@ -31,10 +31,12 @@
 				</div>
 			</c:otherwise>
 		</c:choose>
-	</form>
+	</form><br>
 	<c:choose>
 		<c:when test="${empty principal.user.oauth}">
-			<button id="btn-update" class="btn btn-primary"><i class="fa-solid fa-check"></i> 완료</button>
+			<div align="right">
+				<button id="btn-update" class="btn btn-update"><i class="fa-solid fa-check"></i> 완료</button>
+			</div>
 		</c:when>
 		<c:otherwise>
 			<button class="btn btn-primary" onclick="history.back()">뒤로</button>

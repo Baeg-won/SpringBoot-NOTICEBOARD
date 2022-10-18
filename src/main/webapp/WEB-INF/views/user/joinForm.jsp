@@ -21,8 +21,10 @@
 			<label for="email">Email address</label> <input type="email" class="form-control" placeholder="Enter email" id="email">
 		</div>
 		<p id="valid_email"></p>
-	</form>
-	<button id="btn-join" class="btn btn-primary"><i class="fa-solid fa-check"></i> 회원가입</button>
+	</form><br>
+	<div align="right">
+		<button id="btn-join" class="btn"><i class="fa-solid fa-check"></i> 회원가입</button>
+	</div>
 </div>
 <br>
 

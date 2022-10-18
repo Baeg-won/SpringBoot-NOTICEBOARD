@@ -30,7 +30,7 @@ public class BoardController {
 	private final BoardRepository boardRepository;
 	private final BoardService boardService;
 	
-	@GetMapping("/")
+	@GetMapping("/board")
 	public String index(Model model,  
 			@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
 			@RequestParam(value = "category", defaultValue = "none") String category,

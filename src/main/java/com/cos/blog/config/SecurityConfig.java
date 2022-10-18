@@ -79,7 +79,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 		  	.userDetailsService(principalDetailService)
 		  .and()
 		  .authorizeRequests()  
-		    .antMatchers("/", "/auth/**", "/js/**", "/css/**", "/image/**", "/sort/**")
+		    .antMatchers("/", "/auth/**", "/js/**", "/css/**", "/image/**", "/sort/**", "/board/**")
 		    .permitAll()
 		    .anyRequest()
 		    .authenticated()

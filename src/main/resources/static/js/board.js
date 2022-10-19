@@ -37,7 +37,7 @@ let index_board = {
 			//dataType: "json"
 		}).done(function(resp) {
 			alert("글쓰기가 완료되었습니다.");
-			location.href = "/";
+			location.href = `/board?category=${data.category}`;
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
 		});
@@ -45,13 +45,14 @@ let index_board = {
 
 	deleteById: function() {
 		let id = $("#board_id").val();
+		let category = $("#category").val();
 
 		$.ajax({
 			type: "DELETE",
 			url: "/api/board/" + id
 		}).done(function(resp) {
 			alert("글 삭제가 완료되었습니다.");
-			location.href = "/";
+			location.href = `/board?category=${category}`;
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
 		});
@@ -60,6 +61,7 @@ let index_board = {
 	update: function() {
 		let id = $("#board_id").val();
 		let data = {
+			category: $("#category option:selected").val(),
 			title: $("#title").val(),
 			content: $("#content").val()
 		};
@@ -72,7 +74,7 @@ let index_board = {
 			//dataType: "json"
 		}).done(function(resp) {
 			alert("글 수정이 완료되었습니다.");
-			location.href = "/";
+			location.href = `/board?category=${data.category}`;
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
 		});

@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.font-bold {
+	font-weight: bold;
+}
+
+.create-datetime {
+	font-size: small;
+	color: gray;
+	padding-top: 3px;
+}
+
+.detail-bottom {
+	color: blue;
+}

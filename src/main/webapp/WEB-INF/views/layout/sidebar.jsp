@@ -9,7 +9,7 @@
 			<c:when test="${not empty principal}">
 				<img id="userProfileImage" src="/upload/${principal.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" class="rounded-circle profile"
 					onclick="profileImageUpload(${principal.user.id})" style="cursor: pointer;">
-				<div style="font-weight: bold;">${principal.user.nickname}</div>
+				<div class="font-bold">${principal.user.nickname}</div>
 			</c:when>
 			<c:otherwise>
 				<img id="userProfileImage" src="/image/profile.jpg" class="rounded-circle profile">

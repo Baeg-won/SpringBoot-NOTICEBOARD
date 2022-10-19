@@ -80,7 +80,8 @@ public class BoardService {
 		
 		if(board.getSeen() == null) {
 			board.setSeen("[" + principal_id.toString() + "]");
-		} else {
+		}
+		if(!board.getSeen().contains("[" + principal_id.toString() + "]")) {
 			board.setSeen(board.getSeen() + "[" + principal_id.toString() + "]");
 		}
 
@@ -100,6 +101,7 @@ public class BoardService {
 
 		board.setTitle(requestBoard.getTitle());
 		board.setContent(requestBoard.getContent());
+		board.setCategory(requestBoard.getCategory());
 	}
 
 	@Transactional

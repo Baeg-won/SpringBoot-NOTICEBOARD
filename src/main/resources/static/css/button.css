@@ -27,13 +27,19 @@
 	width: 100px;
 }
 
-.btn-update {
+.btn-confirm {
+	width: 80px;
+}
+
+.btn-back {
 	width: 80px;
 }
 
 .btn-alarm {
 	width: 40px;
 	height: 35px;
+	color: white;
+	position:relative;
 }
 
 .btn-list {
@@ -44,6 +50,7 @@
 .btn-comment {
 	border-radius: 5px;
 	width: 80px;
+	display: inline-block;
 }
 
 .btn-recommend {

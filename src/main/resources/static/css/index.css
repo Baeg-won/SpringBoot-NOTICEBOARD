@@ -10,6 +10,14 @@ html, body {
 	user-select:none
 }
 
+.flex {
+	display: flex;
+}
+
+.reply {
+	color: red;
+}
+
 #outer-container {
 	display: table;
 	width: 100%;
@@ -28,6 +36,7 @@ html, body {
     position: absolute;  
     bottom: 0;
     left: 0;
+    margin-bottom: 0;
 }
 
 .div-screenshot {
@@ -55,6 +64,11 @@ html, body {
 	overflow: hidden; 
 	text-overflow: ellipsis; 
 	white-space: nowrap;
+}
+
+.screenshot-bottom {
+	font-size: small;
+	margin-bottom: 5px;
 }
 
 .board-title {

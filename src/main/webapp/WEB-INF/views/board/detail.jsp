@@ -5,28 +5,35 @@
 <br>
 <div class="container">
 	<input type="hidden" id="board_id" name="board_id" value="${board.id}"/>
-	<button class="btn btn-list" onclick="location.href='/?category=${category}&page=${page}&sort=${sort}&searchType=${searchType}&searchKeyword=${searchKeyword}'"><i class="fa-solid fa-list"></i> 목록</button>
-	<c:if test="${board.user.id == principal.user.id}">
-	<span style="float: right;">
-		<a href="/board/${board.id}/updateForm" class="btn btn-retouch"><i class="fa-solid fa-pen-to-square"></i> 수정</a>
-		<button id="btn-delete" class="btn btn-delete"><i class="fa-solid fa-trash"></i> 삭제</button>
-	</span>
-	</c:if>
+	<input type="hidden" id="category" name="category" value="${param.category}">
+	<div class="d-flex justify-content-between">
+		<div>
+			<button class="btn btn-list" onclick="location.href='/board?category=${category}&page=${page}&sort=${sort}&searchType=${searchType}&searchKeyword=${searchKeyword}'">
+				<i class="fa-solid fa-list"></i> 목록
+			</button>
+		</div>
+		<c:if test="${board.user.id == principal.user.id}">
+			<div>
+				<a href="/board/${board.id}/updateForm" class="btn btn-retouch"><i class="fa-solid fa-pen-to-square"></i> 수정</a>
+				<button id="btn-delete" class="btn btn-delete"><i class="fa-solid fa-trash"></i> 삭제</button>
+			</div>
+		</c:if>
+	</div>
 	<br><br>
 	<div class="d-flex justify-content-between">
 		<c:choose>
 			<c:when test="${board.category eq 'secret'}">
-				<span><i class="fa-solid fa-user"></i> 익명</span><br>
+				<div><i class="fa-solid fa-user"></i> 익명</div><br>
 			</c:when>
 			<c:otherwise>
-				<span><img class="rounded-circle" src="/upload/${board.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30"> ${board.user.nickname}</span><br>
+				<div><img class="rounded-circle" src="/upload/${board.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30"> ${board.user.nickname}</div><br>
 			</c:otherwise>
 		</c:choose>
-		<span>
+		<div>
 			<i class="fa-solid fa-calendar-days"></i> ${board.createDate} &nbsp;&nbsp;
 			<i class="fa-solid fa-eye"></i> ${board.count} &nbsp;&nbsp;
 			<i class="fa-solid fa-thumbs-up"></i> ${board.recommendCount}
-		</span>
+		</div>
 	</div>
 	<hr>
 	<div class="form-group">
@@ -38,26 +45,18 @@
 	</div>
 	<c:choose>
 		<c:when test="${board.recommend_state}">
-			<div style="text-align: center;">
-				<button onClick="index_board.recommend(${board.id}, ${board.recommend_state})" class="btn btn-recommend" style="display: inline-block;">
+			<div align="center">
+				<button onClick="index_board.recommend(${board.id}, ${board.recommend_state})" class="btn btn-recommend">
 					<i class="fa-regular fa-thumbs-up"></i> 추천 <span>${board.recommendCount}</span>
 				</button>
 			</div>
 		</c:when>
 		<c:otherwise>
-			<div style="text-align: center;">
-				<c:choose>
-					<c:when test="${board.user.id != principal.user.id}">
-						<button onClick="index_board.recommend(${board.id}, ${board.recommend_state})" class="btn btn-recommend btn-outline-recommend" style="display: inline-block;">
-							<i class="fa-regular fa-thumbs-up"></i> 추천 <span>${board.recommendCount}</span>
-						</button>
-					</c:when>
-					<c:otherwise>
-						<button onClick="index_board.recommend(${board.id}, ${board.recommend_state})" class="btn btn-recommend btn-outline-recommend" style="display: inline-block;" disabled>
-							<i class="fa-regular fa-thumbs-up"></i> 추천 <span>${board.recommendCount}</span>
-						</button>
-					</c:otherwise>
-				</c:choose>
+			<div align="center">
+				<button onClick="index_board.recommend(${board.id}, ${board.recommend_state})" class="btn btn-recommend btn-outline-recommend"
+					<c:if test="${board.user.id == principal.user.id}">disabled</c:if>>
+					<i class="fa-regular fa-thumbs-up"></i> 추천 <span>${board.recommendCount}</span>
+				</button>
 			</div>
 		</c:otherwise>
 	</c:choose>
@@ -72,23 +71,23 @@
 	</div>
 	<br>
 	<div class="card">
-		<div class="card-header"><i class="fa-solid fa-comment"></i> 댓글 <span style="color: red;">[${fn:length(board.replys)}]</span></div>
+		<div class="card-header"><i class="fa-solid fa-comment"></i> 댓글 <span class="reply">[${fn:length(board.replys)}]</span></div>
 		<ul id="reply-box" class="list-group">
 			<c:forEach var="reply" items="${board.replys}">
 				<li id="reply-${reply.id}" class="list-group-item justify-content-between">
 					<div class="d-flex">
-						<p style="font-weight: bold;">
+						<p class="font-bold">
 							<c:choose>
 								<c:when test="${board.category eq 'secret'}">
 									<p><i class="fa-solid fa-user"></i> 익명</p>							
 								</c:when>
 								<c:otherwise>
-									<img class="rounded-circle" src="/upload/${reply.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30">&nbsp;&nbsp;${reply.user.nickname}
+									<img class="rounded-circle" src="/upload/${reply.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30">
+									&nbsp;&nbsp;${reply.user.nickname}
 								</c:otherwise>
 							</c:choose>
-						</p>
-						&nbsp;
-						<div style="font-size: small; color: gray; padding-top: 3px;">(${reply.createDateTime})</div>
+						</p>&nbsp;
+						<div class="create-datetime">(${reply.createDateTime})</div>
 					</div>
 					<div>${reply.content}</div>
 					<c:if test="${reply.user.nickname == principal.user.nickname}">
@@ -101,21 +100,26 @@
 	<br>
 	<div class="list-group">
 		<a href="/board/${board.next_board.id}?page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}"
-			class="list-group-item list-group-item-action <c:if test="${empty board.next_board}">disabled</c:if>"> <span style="font-weight: bold;"><i class="fa-solid fa-arrow-up"></i>&nbsp; 다음글</span> │ <c:choose>
+			class="list-group-item list-group-item-action <c:if test="${empty board.next_board}">disabled</c:if>">
+			<span class="font-bold"><i class="fa-solid fa-arrow-up"></i>&nbsp; 다음글</span> │ 
+			<c:choose>
 				<c:when test="${empty board.next_board}">
 					다음글이 없습니다.
 				</c:when>
 				<c:otherwise>
-					<span style="color: blue;">${board.next_board.title}</span>
+					<span class="detail-bottom">${board.next_board.title}</span>
 				</c:otherwise>
 			</c:choose>
-		</a> <a href="/board/${board.prev_board.id}?page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}"
-			class="list-group-item list-group-item-action <c:if test="${empty board.prev_board}">disabled</c:if>"> <span style="font-weight: bold;"><i class="fa-solid fa-arrow-down"></i>&nbsp; 이전글</span> │ <c:choose>
+		</a>
+		<a href="/board/${board.prev_board.id}?page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}"
+			class="list-group-item list-group-item-action <c:if test="${empty board.prev_board}">disabled</c:if>">
+			<span class="font-bold"><i class="fa-solid fa-arrow-down"></i>&nbsp; 이전글</span> │
+			<c:choose>
 				<c:when test="${empty board.prev_board}">
 					이전글이 없습니다.
 				</c:when>
 				<c:otherwise>
-					<span style="color: blue;">${board.prev_board.title}</span>
+					<span class="detail-bottom">${board.prev_board.title}</span>
 				</c:otherwise>
 			</c:choose>
 		</a>

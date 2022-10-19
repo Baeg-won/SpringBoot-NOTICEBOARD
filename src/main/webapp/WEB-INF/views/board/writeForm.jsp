@@ -19,7 +19,7 @@
 			<textarea class="form-control summernote" rows="5" id="content"></textarea>
 		</div>
 	</form>
-	<button id="btn-write" class="btn btn-primary">
+	<button id="btn-write" class="btn btn-confirm">
 		<i class="fa-solid fa-check"></i> 등록
 	</button>
 </div>

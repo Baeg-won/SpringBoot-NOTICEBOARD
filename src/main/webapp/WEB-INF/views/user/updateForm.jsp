@@ -35,11 +35,11 @@
 	<c:choose>
 		<c:when test="${empty principal.user.oauth}">
 			<div align="right">
-				<button id="btn-update" class="btn btn-update"><i class="fa-solid fa-check"></i> 완료</button>
+				<button id="btn-update" class="btn btn-confirm"><i class="fa-solid fa-check"></i> 완료</button>
 			</div>
 		</c:when>
 		<c:otherwise>
-			<button class="btn btn-primary" onclick="history.back()">뒤로</button>
+			<button class="btn btn-back" onclick="history.back()">뒤로</button>
 		</c:otherwise>
 	</c:choose>
 </div>

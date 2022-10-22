@@ -29,9 +29,10 @@
 <script src="https://kit.fontawesome.com/2804b86193.js" crossorigin="anonymous"></script>
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 
 body {
-	font-family: 'Nanum Gothic', sans-serif;
+	font-family: nanumsquare;
 }
 </style>
 </head>

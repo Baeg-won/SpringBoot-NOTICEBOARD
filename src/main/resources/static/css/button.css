@@ -76,6 +76,19 @@
 	width: 80px;
 }
 
+.btn-admin-modal {
+	background: none;
+	border: none;
+	color: #a8a8a8;
+	font-weight: 600;
+}
+
+.btn-admin {
+	font-size:13px;
+	width: 80px;
+	height: 30px;
+}
+
 .btn:focus {
 	outline: 0;
 }

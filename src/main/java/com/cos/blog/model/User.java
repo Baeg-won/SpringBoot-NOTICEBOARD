@@ -1,6 +1,7 @@
 package com.cos.blog.model;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,4 +65,16 @@ public class User {
 	
 	@CreationTimestamp
 	private Timestamp create_date;
+	
+	public String getCreateDate() {
+		return new SimpleDateFormat("yyyy.MM.dd").format(create_date);
+	}
+	
+	public int getBoardCount() {
+		return boards.size();
+	}
+	
+	public int getReplyCount() {
+		return replys.size();
+	}
 }

@@ -18,10 +18,14 @@
 		</c:choose>
 		<br>
 		<ul class="category-ul">
-			<li class="category-li" onclick="location.href='/board?category=none'"><i class="fa-solid fa-link"></i>&nbsp;&nbsp; 자유게시판</li>
-			<li class="category-li" onclick="location.href='/board?category=popular'"><i class="fa-solid fa-link"></i>&nbsp;&nbsp; 인기게시판</li>
-			<li class="category-li" onclick="location.href='/board?category=secret'"><i class="fa-solid fa-link"></i>&nbsp;&nbsp; 비밀게시판</li>
-			<li class="category-li" onclick="location.href='/board?category=screenshot'"><i class="fa-solid fa-link"></i>&nbsp;&nbsp; 스크린샷 게시판</li>
-			<li class="category-li" onclick="location.href='/board?category=question'"><i class="fa-solid fa-link"></i>&nbsp;&nbsp; 질문과 답변</li>
+			<c:if test="${principal.user.role eq 'ADMIN'}">
+				<li class="category-li" onclick="location.href='/admin?category=user'"><i class="fa-solid fa-link"></i>&nbsp; 회원 관리</li>
+				<li class="category-li" onclick="location.href='/admin?category=board'"><i class="fa-solid fa-link"></i>&nbsp; 게시판 관리</li>
+			</c:if>
+			<li class="category-li" onclick="location.href='/board?category=none'"><i class="fa-solid fa-link"></i>&nbsp; 자유게시판</li>
+			<li class="category-li" onclick="location.href='/board?category=popular'"><i class="fa-solid fa-link"></i>&nbsp; 인기게시판</li>
+			<li class="category-li" onclick="location.href='/board?category=secret'"><i class="fa-solid fa-link"></i>&nbsp; 비밀게시판</li>
+			<li class="category-li" onclick="location.href='/board?category=screenshot'"><i class="fa-solid fa-link"></i>&nbsp; 스크린샷 게시판</li>
+			<li class="category-li" onclick="location.href='/board?category=question'"><i class="fa-solid fa-link"></i>&nbsp; 질문과 답변</li>
 		</ul>
 	</div>

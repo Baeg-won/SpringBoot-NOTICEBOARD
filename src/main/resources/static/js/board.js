@@ -145,5 +145,5 @@ let index_board = {
 index_board.init();
 
 function selectSearchType() {
-	$("#searchType").val($("#select option:selected").val())
+	$("#searchType").val($("#select option:selected").val());
 }

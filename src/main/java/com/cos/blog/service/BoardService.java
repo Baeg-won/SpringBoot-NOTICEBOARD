@@ -1,5 +1,8 @@
 package com.cos.blog.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cos.blog.dto.BoardModalDto;
 import com.cos.blog.dto.BoardWriteDto;
 import com.cos.blog.model.Board;
 import com.cos.blog.model.Reply;
@@ -35,6 +39,27 @@ public class BoardService {
 				.build();
 		
 		boardRepository.save(board);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<BoardModalDto> findByUser(Long user_id) {
+		
+		List<Board> boards = boardRepository.findByUserId(user_id);
+		List<BoardModalDto> boardModalDtoList = new ArrayList<>();
+		
+		for(int i = 0; i < boards.size(); i++) {
+			BoardModalDto boardModalDto = BoardModalDto.builder()
+					.id(boards.get(i).getId())
+					.title(boards.get(i).getTitle())
+					.create_date(boards.get(i).getCreateDate())
+					.views(boards.get(i).getCount())
+					.recommends(boards.get(i).getRecommendCount())
+					.build();
+			
+			boardModalDtoList.add(boardModalDto);
+		}
+		
+		return boardModalDtoList;
 	}
 
 	@Transactional

@@ -3,11 +3,12 @@ package com.cos.blog.repository;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.cos.blog.model.User;
 
 // @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User>{
 	
 	//SELECT * FROM user WHERE username = ?1;
 	Optional<User> findByUsername(String username);

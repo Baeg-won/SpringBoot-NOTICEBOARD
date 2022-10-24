@@ -20,7 +20,7 @@
 		<ul class="category-ul">
 			<c:if test="${principal.user.role eq 'ADMIN'}">
 				<li class="category-li" onclick="location.href='/admin?category=user'"><i class="fa-solid fa-link"></i>&nbsp; 회원 관리</li>
-				<li class="category-li" onclick="location.href='/admin?category=board'"><i class="fa-solid fa-link"></i>&nbsp; 게시판 관리</li>
+				<li class="category-li" onclick="location.href='/admin?category=summary'"><i class="fa-solid fa-link"></i>&nbsp; 데이터 관리</li>
 			</c:if>
 			<li class="category-li" onclick="location.href='/board?category=none'"><i class="fa-solid fa-link"></i>&nbsp; 자유게시판</li>
 			<li class="category-li" onclick="location.href='/board?category=popular'"><i class="fa-solid fa-link"></i>&nbsp; 인기게시판</li>

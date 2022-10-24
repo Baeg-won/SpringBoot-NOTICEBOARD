@@ -6,7 +6,6 @@
 <!-- 헤더, 사이드바 레이아웃 설정 끝 -->
 
 	<div id="content">
-	
 		<c:if test="${category eq 'user'}">
 			<div class="board-title">| 회원 관리</div>
 			
@@ -60,7 +59,7 @@
 									${user.replyCount}
 								</button>
 							</th>
-							<th><button class="btn btn-admin">회원 추방</button></th>
+							<th><button class="btn btn-admin" onclick="userKick(${user.id})">회원 추방</button></th>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -86,6 +85,10 @@
 			</ul>
 			<!-- 페이징 끝 -->
 		</c:if>
+		
+		<c:if test="${category eq 'summary'}">
+			<div id="barchart_material" style="width: 900px; height: 500px;"></div>
+		</c:if>
 	</div>
 </div>
 
@@ -101,10 +104,10 @@
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">
+      <div class="modal-body" id="modalBody">
 	      <table class="table board-table table-hover">
-				<thead id="modalHead"></thead>
-				<tbody id="modalBody"></tbody>
+				<thead id="modalTableHead"></thead>
+				<tbody id="modalTableBody"></tbody>
 		  </table>
       </div>
 
@@ -122,6 +125,33 @@
 <script src="/js/board.js"></script>
 <script src="/js/user.js"></script>
 <script src="/js/admin.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['bar']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Month', '자유게시판', '인기게시판', '비밀게시판'],
+      ['09', 1000, 400, 200],
+      ['10', 1170, 460, 250],
+      ['11', 660, 1120, 300],
+      ['12', 1030, 540, 350]
+    ]);
+
+    var options = {
+      chart: {
+        title: 'Company Performance',
+        subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+      },
+      bars: 'horizontal' // Required for Material Bar Charts.
+    };
+
+    var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+    chart.draw(data, google.charts.Bar.convertOptions(options));
+  }
+</script>
 <!-- 스크립트 설정 끝 -->
 
 <!-- 푸터 레이아웃 설정 -->

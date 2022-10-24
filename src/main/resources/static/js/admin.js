@@ -1,3 +1,15 @@
+function userKick(user_id) {
+	$.ajax({
+		type: "DELETE",
+		url: `/api/user/delete/${user_id}`
+	}).done(function(resp) {
+		alert("회원을 추방하였습니다.");
+		location.reload();
+	}).fail(function(error) {
+		console.log(error);
+	});
+}
+
 function modalOpen(type, nickname, user_id) {
 	if(type == "board") {
 		$("#modalTitle").text(nickname + "님의 작성 게시물");
@@ -18,7 +30,7 @@ function modalOpen(type, nickname, user_id) {
 			resp.forEach((board) => {
 				item += getBoardModalItem(board);
 			});
-			$("#modalBody").append(item);
+			$("#modalTableBody").append(item);
 		}).fail(error => {
 			console.log(error);
 		});
@@ -39,7 +51,7 @@ function modalOpen(type, nickname, user_id) {
 			resp.forEach((reply) => {
 				item += getReplyModalItem(reply);
 			});
-			$("#modalBody").append(item);
+			$("#modalTableBody").append(item);
 		}).fail(error => {
 			console.log(error);
 		});
@@ -48,7 +60,7 @@ function modalOpen(type, nickname, user_id) {
 
 function getBoardModalItem(board) {
 	let item = 
-		`<tr>
+		`<tr onclick="location.href='/board/${board.id}/'">
 			<th>${board.id}</th>				
 			<th class="board-table-title">${board.title}</th>
 			<th>${board.create_date}</th>
@@ -71,6 +83,6 @@ function getReplyModalItem(reply) {
 }
 
 function modalClose() {
-	$("#modalHead > tr").remove();
-	$("#modalBody > tr").remove();
+	$("#modalTableHead > tr").remove();
+	$("#modalTableBody > tr").remove();
 }

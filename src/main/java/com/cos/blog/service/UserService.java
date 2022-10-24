@@ -81,6 +81,11 @@ public class UserService {
 		persistance.setNickname(userDto.getNickname());
 	}
 	
+	@Transactional
+	public void delete(Long user_id) {
+		userRepository.deleteById(user_id);
+	}
+	
 	@Transactional(readOnly = true)
 	public Map<String, String> validateHandling(BindingResult bindingResult) {
 		Map<String, String> validatorResult = new HashMap<>();

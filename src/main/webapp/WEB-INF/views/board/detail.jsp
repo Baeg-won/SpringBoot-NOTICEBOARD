@@ -12,7 +12,7 @@
 				<i class="fa-solid fa-list"></i> 목록
 			</button>
 		</div>
-		<c:if test="${board.user.id == principal.user.id}">
+		<c:if test="${board.user.id == principal.user.id or principal.user.role eq 'ADMIN'}">
 			<div>
 				<a href="/board/${board.id}/updateForm" class="btn btn-retouch"><i class="fa-solid fa-pen-to-square"></i> 수정</a>
 				<button id="btn-delete" class="btn btn-delete"><i class="fa-solid fa-trash"></i> 삭제</button>
@@ -91,7 +91,7 @@
 					</div>
 					<div>${reply.content}</div>
 					<c:if test="${reply.user.nickname == principal.user.nickname}">
-						<button onClick="index.replyDelete(${board.id}, ${reply.id})" class="badge float-right"><i class="fa-solid fa-trash"></i> 삭제</button>
+						<button onClick="index_board.replyDelete(${board.id}, ${reply.id})" class="badge float-right"><i class="fa-solid fa-trash"></i> 삭제</button>
 					</c:if>
 				</li>
 			</c:forEach>

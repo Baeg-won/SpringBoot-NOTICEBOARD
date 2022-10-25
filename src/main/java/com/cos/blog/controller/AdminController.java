@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.model.RoleType;
 import com.cos.blog.model.User;
+import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.repository.UserRepository;
 import com.cos.blog.specification.AdminSpecification;
 

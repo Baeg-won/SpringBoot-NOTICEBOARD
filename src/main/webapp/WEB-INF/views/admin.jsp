@@ -87,11 +87,48 @@
 		</c:if>
 		
 		<c:if test="${category eq 'summary'}">
-			<div id="Line_Controls_Chart">
-		      	<!-- 라인 차트 생성할 영역 -->
-		  		<div id="lineChartArea" style="padding:0px 20px 0px 0px;"></div>
-		      	<!-- 컨트롤바를 생성할 영역 -->
-		  		<div id="controlsArea" style="padding:0px 20px 0px 0px;"></div>
+			<div class="data">
+				<div class="data-summary">
+					<dl>
+						<dt>오늘 작성글</dt>
+						<dd>320</dd>
+					</dl>
+					<dl>
+						<dt>어제 작성글</dt>
+						<dd>320</dd>
+					</dl>
+					<dl>
+						<dt>누적 작성글</dt>
+						<dd>320</dd>
+					</dl>
+				</div>
+				
+				<div class="data-summary">
+					<dl>
+						<dt style="color: red;">자유 게시판</dt>
+						<dd>320</dd>
+					</dl>
+					<dl>
+						<dt style="color: orange;">비밀 게시판</dt>
+						<dd>320</dd>
+					</dl>
+					<dl>
+						<dt style="color: green;">스크린샷 게시판</dt>
+						<dd>320</dd>
+					</dl>
+					<dl>
+						<dt style="color: purple;">질문과 답변</dt>
+						<dd>320</dd>
+					</dl>
+				</div><br><br>
+		
+				<div class="chart-title">최근 7일 통계</div>
+				<div id="Line_Controls_Chart">
+			      	<!-- 라인 차트 생성할 영역 -->
+			  		<div id="lineChartArea" class="chart"></div>
+			      	<!-- 컨트롤바를 생성할 영역 -->
+			  		<div id="controlsArea" style="display: none;"></div>
+				</div>
 			</div>
 		</c:if>
 	</div>
@@ -157,7 +194,7 @@
 	        var chartData = '';
 
 	        //날짜형식 변경하고 싶으시면 이 부분 수정하세요.
-	        var chartDateformat 	= 'yyyy년MM월dd일';
+	        var chartDateformat 	= 'MM월 dd일';
 	        //라인차트의 라인 수
 	        var chartLineCount    = 10;
 	        //컨트롤러 바 차트의 라인 수
@@ -177,6 +214,7 @@
 
 	          //그래프에 표시할 데이터
 	          var dataRow = [];
+	          var dateList = [];
 
 	          for (var i = 0; i < queryObjectLen; i++) {
 	              var create_date = queryObject.boardList[i].create_date;
@@ -184,7 +222,9 @@
 	              var secret = queryObject.boardList[i].secret;
 	              var screenshot = queryObject.boardList[i].screenshot;
 	              var question = queryObject.boardList[i].question;
-	              dataRow = [new Date(create_date.substring(0, 4), create_date.substring(5, 7) - 1, create_date.substring(8, 10), '0'), 
+	              
+	              dateList.push(new Date(create_date.substring(0, 4), create_date.substring(5, 7) - 1, create_date.substring(8, 10)));
+	              dataRow = [new Date(create_date.substring(0, 4), create_date.substring(5, 7) - 1, create_date.substring(8, 10)), 
 	            	  none + secret + screenshot + question, none, secret, screenshot, question];
 	              data.addRow(dataRow);
 	          }
@@ -193,23 +233,27 @@
 	              chartType   : 'LineChart',
 	              containerId : 'lineChartArea', //라인 차트 생성할 영역
 	              options     : {
+	            	  			  chartArea: {width: '85%', height: '70%'},
+	            	  			  curveType: 'function',
 	                              isStacked   : 'percent',
 	                              focusTarget : 'category',
 	                              height		  : 500,
 	                              width			  : '100%',
-	                              legend		  : { position: "top", textStyle: {fontSize: 13}},
+	                              legend		  : { position: "top", textStyle: {fontName: 'nanumsquare', fontSize: 13}},
 	                              pointSize		: 5,
-	                              tooltip		  : {textStyle : {fontSize:12}, showColorCode : true,trigger: 'both'},
+	                              tooltip		  : {textStyle : {fontName: 'nanumsquare', fontSize:12}, showColorCode : true,trigger: 'both'},
 	                              hAxis			  : {format: chartDateformat, gridlines:{count:chartLineCount,units: {
 	                                                                  years : {format: ['yyyy년']},
 	                                                                  months: {format: ['MM월']},
 	                                                                  days  : {format: ['dd일']},
 	                                                                  hours : {format: ['HH시']}}
-	                                                                },textStyle: {fontSize:12}},
-	                vAxis			  : {minValue: 15,viewWindow:{min:0},gridlines:{count:-1},textStyle:{fontSize:12}},
+	                                                                },textStyle: {fontName: 'nanumsquare', fontSize:12},
+	                                                                ticks: dateList},
+	                vAxis			  : {minValue: 15,viewWindow:{min:0},gridlines:{count:-1}, format: '#', textStyle:{fontName: 'nanumsquare', fontSize:12}},
 	                animation		: {startup: true,duration: 1000,easing: 'in' },
 	                annotations	: {pattern: chartDateformat,
 	                                textStyle: {
+	                                fontName: 'nanumsquare', 
 	                                fontSize: 15,
 	                                bold: true,
 	                                italic: true,
@@ -230,7 +274,7 @@
 	                        chartType: 'LineChart',
 	                        chartOptions: {
 	                        chartArea: {'width': '60%','height' : 80},
-	                          hAxis: {'baselineColor': 'none', format: chartDateformat, textStyle: {fontSize:12},
+	                          hAxis: {'baselineColor': 'none', format: chartDateformat, textStyle: {fontName: 'nanumsquare', fontSize:12},
 	                            gridlines:{count:controlLineCount,units: {
 	                                  years : {format: ['yyyy년']},
 	                                  months: {format: ['MM월']},

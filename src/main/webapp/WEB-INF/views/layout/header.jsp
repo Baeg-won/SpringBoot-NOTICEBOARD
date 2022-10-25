@@ -26,6 +26,7 @@
 <link href="/css/sidebar.css" rel="stylesheet" type="text/css">
 <link href="/css/home.css" rel="stylesheet" type="text/css">
 <link href="/css/detail.css" rel="stylesheet" type="text/css">
+<link href="/css/admin.css" rel="stylesheet" type="text/css">
 <script src="https://kit.fontawesome.com/2804b86193.js" crossorigin="anonymous"></script>
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);

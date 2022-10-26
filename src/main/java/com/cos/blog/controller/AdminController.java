@@ -1,5 +1,7 @@
 package com.cos.blog.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 	
 	private final UserRepository userRepository;
+	private final BoardRepository boardRepository;
 
 	@GetMapping("/admin")
 	public String admin(Model model,
@@ -52,6 +55,15 @@ public class AdminController {
 			}
 			
 			model.addAttribute("users", userRepository.findAll(spec, pageable));
+		} else {
+			model.addAttribute("countToday", boardRepository.countTodayBoard());
+			model.addAttribute("countYesterday", boardRepository.countYesterdayBoard());
+			model.addAttribute("countTotal", boardRepository.countTotalBoard());
+			
+			model.addAttribute("countNone", boardRepository.countByCategory("none"));
+			model.addAttribute("countSecret", boardRepository.countByCategory("secret"));
+			model.addAttribute("countScreenshot", boardRepository.countByCategory("screenshot"));
+			model.addAttribute("countQuestion", boardRepository.countByCategory("question"));
 		}
 		
 		model.addAttribute("category", category);

@@ -28,4 +28,16 @@ public interface BoardRepository extends JpaRepository<Board, Long>, JpaSpecific
 	
 	@Query(value = "SELECT * FROM board WHERE user_id = :user_id ORDER BY id DESC", nativeQuery = true)
 	List<Board> findByUserId(Long user_id);
+	
+	@Query(value = "select count(*) from board where date(create_date) = date(now())", nativeQuery = true)
+	int countTodayBoard();
+	
+	@Query(value = "select count(*) from board where date(create_date) = date(date_add(now(), interval - 1 day))", nativeQuery = true)
+	int countYesterdayBoard();
+	
+	@Query(value = "select count(*) from board", nativeQuery = true)
+	int countTotalBoard();
+	
+	@Query(value = "select count(*) from board where category = :category", nativeQuery = true)
+	int countByCategory(String category);
 }

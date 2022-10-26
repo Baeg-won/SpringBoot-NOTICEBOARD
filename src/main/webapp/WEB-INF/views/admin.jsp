@@ -91,34 +91,34 @@
 				<div class="data-summary">
 					<dl>
 						<dt>오늘 작성글</dt>
-						<dd>320</dd>
+						<dd>${countToday}</dd>
 					</dl>
 					<dl>
 						<dt>어제 작성글</dt>
-						<dd>320</dd>
+						<dd>${countYesterday}</dd>
 					</dl>
 					<dl>
 						<dt>누적 작성글</dt>
-						<dd>320</dd>
+						<dd>${countTotal}</dd>
 					</dl>
 				</div>
 				
 				<div class="data-summary">
 					<dl>
 						<dt style="color: red;">자유 게시판</dt>
-						<dd>320</dd>
+						<dd>${countNone}</dd>
 					</dl>
 					<dl>
 						<dt style="color: orange;">비밀 게시판</dt>
-						<dd>320</dd>
+						<dd>${countSecret}</dd>
 					</dl>
 					<dl>
 						<dt style="color: green;">스크린샷 게시판</dt>
-						<dd>320</dd>
+						<dd>${countScreenshot}</dd>
 					</dl>
 					<dl>
 						<dt style="color: purple;">질문과 답변</dt>
-						<dd>320</dd>
+						<dd>${countQuestion}</dd>
 					</dl>
 				</div><br><br>
 		

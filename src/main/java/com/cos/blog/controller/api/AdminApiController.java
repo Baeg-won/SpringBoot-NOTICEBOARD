@@ -39,7 +39,6 @@ public class AdminApiController {
 			// DB에서 뽑아온 데이터(JSON) 을 담을 객체. 후에 responseObj에 담기는 값
 			List<JSONObject> boardList = new LinkedList<JSONObject>();
 
-			// 시간대별 평균값을 산출
 			String query = "select date(create_date) as 'cd', "
 					+ "count(case when category = 'none' then 0 end) as 'none', "
 					+ "count(case when category = 'secret' then 0 end) as 'secret', "

@@ -12,6 +12,12 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailAuthenticationException;
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailParseException;
+import org.springframework.mail.MailSendException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,6 +33,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cos.blog.dto.SendTmpPwdDto;
 import com.cos.blog.dto.UserRequestDto;
 import com.cos.blog.model.KakaoProfile;
 import com.cos.blog.model.OAuthToken;
@@ -47,11 +54,16 @@ public class UserService {
 	private final BCryptPasswordEncoder encoder;
 	private final AuthenticationManager authenticationManager;
 	
+	private final JavaMailSender javaMailSender;
+	
 	@Value("${secrect.key}")
 	private String secrectKey;
 	
 	@Value("${file.path}")
 	private String uploadFolder;
+	
+	@Value("${spring.mail.username}")
+	private String sendFrom;
 
 	@Transactional
 	public void join(UserRequestDto userDto) {
@@ -205,5 +217,45 @@ public class UserService {
 		});
 		
 		user.setProfile_image_url(imageFileName);
+	}
+	
+	@Transactional
+	public void sendTmpPwd(SendTmpPwdDto dto) {
+		
+		char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
+                'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+
+        String tmpPwd = "";
+
+        // 문자 배열 길이의 값을 랜덤으로 10개를 뽑아 구문을 작성함
+        int idx = 0;
+        for (int i = 0; i < 10; i++) {
+            idx = (int) (charSet.length * Math.random());
+            tmpPwd += charSet[idx];
+        }
+		
+		try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(dto.getEmail());
+            message.setFrom(sendFrom);
+            message.setSubject("baeg-won 임시 비밀번호 안내 이메일입니다.");
+            message.setText("안녕하세요. baeg-won 임시비밀번호 안내 관련 이메일 입니다.\n"
+            		+ "회원님의 임시 비밀번호는 " + tmpPwd + "입니다.\n" + "로그인 후에 비밀번호를 변경을 해주세요");
+            javaMailSender.send(message);
+        } catch (MailParseException e) {
+            e.printStackTrace();
+        } catch (MailAuthenticationException e) {
+            e.printStackTrace();
+        } catch (MailSendException e) {
+            e.printStackTrace();
+        } catch (MailException e) {
+            e.printStackTrace();
+        }
+		
+		User user = userRepository.findByUsername(dto.getUsername()).orElseThrow(() -> {
+			return new IllegalArgumentException("임시 비밀번호 변경 실패: 사용자 이름을 찾을 수 없습니다.");
+		});
+		
+		user.setPassword(encoder.encode(tmpPwd));
 	}
 }

@@ -32,6 +32,11 @@ public class UserController {
 	public String updateForm() {
 		return "user/updateForm";
 	}
+	
+	@GetMapping("/auth/findForm")
+	public String findForm() {
+		return "user/findForm";
+	}
 
 	@GetMapping("/auth/kakao/callback")
 	public String kakaoCallBack(String code) {

@@ -7,6 +7,10 @@ let index_user = {
 		$("#btn-update").on("click", () => {
 			this.update();
 		});
+		
+		$("#btn-find").on("click", () => {
+			this.find();
+		});
 	},
 
 	join: function() {
@@ -29,25 +33,21 @@ let index_user = {
 
 				if (resp.data.hasOwnProperty('valid_username')) {
 					$('#valid_username').text(resp.data.valid_username);
-					$('#valid_username').css('color', 'red');
 				}
 				else $('#valid_username').text('');
 
 				if (resp.data.hasOwnProperty('valid_password')) {
 					$('#valid_password').text(resp.data.valid_password);
-					$('#valid_password').css('color', 'red');
 				}
 				else $('#valid_password').text('');
 
 				if (resp.data.hasOwnProperty('valid_nickname')) {
 					$('#valid_nickname').text(resp.data.valid_nickname);
-					$('#valid_nickname').css('color', 'red');
 				}
 				else $('#valid_nickname').text('');
 
 				if (resp.data.hasOwnProperty('valid_email')) {
 					$('#valid_email').text(resp.data.valid_email);
-					$('#valid_email').css('color', 'red');
 				}
 				else $('#valid_email').text('');
 			}
@@ -96,6 +96,29 @@ let index_user = {
 			location.href = "/";
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
+		});
+	},
+	
+	find: function() {
+		let data = {
+			username: $("#username").val(),
+			email: $("#email").val()	
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: "/auth/find",
+			data: JSON.stringify(data),
+			contentType: "application/json; charset=utf-8"
+		}).done(function(resp) {
+			if (resp.status == 400) {
+				$("#valid_username").text(resp.data);
+			} else {
+				alert("임시 비밀번호가 발송되었습니다.");
+				location.href = "/auth/loginForm";
+			}
+		}).fail(function(error) {
+			console.log(error);
 		});
 	}
 }

@@ -1,11 +1,12 @@
 package com.cos.blog.controller.api;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,8 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.dto.ResponseDto;
+import com.cos.blog.dto.SendTmpPwdDto;
 import com.cos.blog.dto.UserRequestDto;
-import com.cos.blog.model.User;
+import com.cos.blog.repository.UserRepository;
 import com.cos.blog.service.UserService;
 import com.cos.blog.validator.CheckEmailValidator;
 import com.cos.blog.validator.CheckNicknameValidator;
@@ -38,6 +40,8 @@ import lombok.RequiredArgsConstructor;
 public class UserApiController {
 
 	private final UserService userService;
+	private final UserRepository userRepository;
+	
 	private final AuthenticationManager authenticationManager;
 	
 	private final CheckUsernameValidator checkUsernameValidator;
@@ -86,5 +90,21 @@ public class UserApiController {
 		userService.delete(user_id);
 		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); 
-	} 
+	}
+	
+	@PostMapping("/auth/find")
+	public ResponseDto<?> find(@RequestBody SendTmpPwdDto dto) {
+		
+		Map<HttpStatus, String> validResult = new HashMap<>();
+		
+		if(!userRepository.existsByUsername(dto.getUsername())) {
+			return new ResponseDto<String>(HttpStatus.BAD_REQUEST.value(), "존재하지 않는 회원입니다.");
+		} else if(Pattern.matches("^(?:\\\\w+\\\\.?)*\\\\w+@(?:\\\\w+\\\\.)+\\\\w+$", dto.getEmail())) {
+			return new ResponseDto<String>(HttpStatus.BAD_REQUEST.value(), "올바르지 않은 이메일 형식입니다.");
+		}
+		
+		userService.sendTmpPwd(dto);
+		
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); 
+	}
 }

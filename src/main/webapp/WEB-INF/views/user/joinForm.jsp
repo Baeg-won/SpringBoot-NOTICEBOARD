@@ -3,27 +3,30 @@
 <%@ include file="../layout/header.jsp"%>
 
 <br>
-<div class="container">
-	<form>
-		<div class="form-group">
-			<label for="username">Username</label> <input type="text" class="form-control" placeholder="Enter username" id="username">
+<div class="container" align="center">
+	<div class="form-title">Sign up to blog</div>
+	<div class="form-style">
+		<form>
+			<div class="form-group" align="left">
+				<label for="username">Username</label> <input type="text" class="form-control" placeholder="Enter username" id="username">
+			</div>
+			<p class="valid-text" id="valid_username" align="left"></p>
+			<div class="form-group" align="left">
+				<label for="password">Password</label> <input type="password" class="form-control" placeholder="Enter password" id="password">
+			</div>
+			<p class="valid-text" id="valid_password" align="left"></p>
+			<div class="form-group" align="left">
+				<label for="nickname">Nickname</label> <input type="text" class="form-control" placeholder="Enter nickname" id="nickname">
+			</div>
+			<p class="valid-text" id="valid_nickname" align="left"></p>
+			<div class="form-group" align="left">
+				<label for="email">Email address</label> <input type="email" class="form-control" placeholder="Enter email" id="email">
+			</div>
+			<p class="valid-text" id="valid_email" align="left"></p>
+		</form><br>
+		<div align="right">
+			<button id="btn-join" class="btn btn-join"><i class="fa-solid fa-check"></i> 회원가입</button>
 		</div>
-		<p id="valid_username"></p>
-		<div class="form-group">
-			<label for="password">Password</label> <input type="password" class="form-control" placeholder="Enter password" id="password">
-		</div>
-		<p id="valid_password"></p>
-		<div class="form-group">
-			<label for="nickname">Nickname</label> <input type="text" class="form-control" placeholder="Enter nickname" id="nickname">
-		</div>
-		<p id="valid_nickname"></p>
-		<div class="form-group">
-			<label for="email">Email address</label> <input type="email" class="form-control" placeholder="Enter email" id="email">
-		</div>
-		<p id="valid_email"></p>
-	</form><br>
-	<div align="right">
-		<button id="btn-join" class="btn"><i class="fa-solid fa-check"></i> 회원가입</button>
 	</div>
 </div>
 <br>

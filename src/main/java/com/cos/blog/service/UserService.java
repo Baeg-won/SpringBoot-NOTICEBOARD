@@ -239,8 +239,11 @@ public class UserService {
             message.setTo(dto.getEmail());
             message.setFrom(sendFrom);
             message.setSubject("baeg-won 임시 비밀번호 안내 이메일입니다.");
-            message.setText("안녕하세요. baeg-won 임시비밀번호 안내 관련 이메일 입니다.\n"
-            		+ "회원님의 임시 비밀번호는 " + tmpPwd + "입니다.\n" + "로그인 후에 비밀번호를 변경을 해주세요");
+            message.setText("안녕하세요.\n"
+            		+ "baeg-won 임시비밀번호 안내 관련 이메일 입니다.\n"
+            		+ "임시 비밀번호를 발급하오니 블로그에 접속하셔서 로그인 하신 후\n"
+            		+ "반드시 비밀번호를 변경해주시기 바랍니다.\n\n"
+            		+ "임시 비밀번호 : " + tmpPwd);
             javaMailSender.send(message);
         } catch (MailParseException e) {
             e.printStackTrace();

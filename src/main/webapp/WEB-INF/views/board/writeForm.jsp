@@ -2,28 +2,28 @@
 
 <%@ include file="../layout/header.jsp"%>
 
-<br>
-<div class="container">
-	<form>
-		<select id="category" class="form-control">
-			<option value="none">자유게시판</option>
-			<option value="secret">비밀게시판</option>
-			<option value="screenshot">스크린샷 게시판</option>
-			<option value="question">질문과 답변</option>
-		</select><br>
-		<div class="form-group">
-			<label for="title"><i class="fa-solid fa-pen-nib"></i> 제목</label> <input type="text" class="form-control" placeholder="Enter title" id="title">
-		</div>
-		<div class="form-group">
-			<label for="content"><i class="fa-solid fa-pen-nib"></i> 내용</label>
-			<textarea class="form-control summernote" rows="5" id="content"></textarea>
-		</div>
-	</form>
-	<button id="btn-write" class="btn btn-confirm">
-		<i class="fa-solid fa-check"></i> 등록
-	</button>
-</div>
-<br>
+<div id="wrapper">
+	<div id="content" class="container">
+		<form>
+			<label for="category"><i class="fa-solid fa-pen-nib"></i> 카테고리</label>
+			<select id="category" class="form-control">
+				<option value="none">자유게시판</option>
+				<option value="secret">비밀게시판</option>
+				<option value="screenshot">스크린샷 게시판</option>
+				<option value="question">질문과 답변</option>
+			</select><br>
+			<div class="form-group">
+				<label for="title"><i class="fa-solid fa-pen-nib"></i> 제목</label> <input type="text" class="form-control" placeholder="Enter title" id="title">
+			</div>
+			<div class="form-group">
+				<label for="content"><i class="fa-solid fa-pen-nib"></i> 내용</label>
+				<textarea class="form-control summernote" rows="5" id="content"></textarea>
+			</div>
+		</form>
+		<button id="btn-write" class="btn btn-confirm">
+			<i class="fa-solid fa-check"></i> 등록
+		</button>
+	</div>
 
 <script>
 	$('.summernote').summernote({

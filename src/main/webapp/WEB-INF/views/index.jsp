@@ -2,10 +2,10 @@
 
 <!-- 헤더, 사이드바 레이아웃 설정 -->
 <%@ include file="layout/header.jsp"%>
-<%@ include file="layout/sidebar.jsp"%>
 <!-- 헤더, 사이드바 레이아웃 설정 끝 -->
 
-	<div id="content">
+<div id="wrapper">
+	<div id="content" class="container">
 	
 		<!-- 게시판 타이틀 -->
 		<div class="board-title">|
@@ -172,7 +172,6 @@
 		</ul>
 		<!-- 페이징 끝 -->
 	</div>
-</div>
 
 <!-- 스크립트 설정 -->
 <script src="/js/board.js"></script>

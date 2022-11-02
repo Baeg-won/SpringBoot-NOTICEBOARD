@@ -14,6 +14,8 @@ let index_user = {
 	},
 
 	join: function() {
+		LoadingWithMask();
+		
 		let data = {
 			username: $("#username").val(),
 			password: $("#password").val(),
@@ -29,27 +31,35 @@ let index_user = {
 			//dataType: "json"
 		}).done(function(resp) {
 			if (resp.status == 400) {
-				alert("회원가입 입력 정보를 다시 확인해주십시오.")
-
-				if (resp.data.hasOwnProperty('valid_username')) {
-					$('#valid_username').text(resp.data.valid_username);
-				}
-				else $('#valid_username').text('');
-
-				if (resp.data.hasOwnProperty('valid_password')) {
-					$('#valid_password').text(resp.data.valid_password);
-				}
-				else $('#valid_password').text('');
-
-				if (resp.data.hasOwnProperty('valid_nickname')) {
-					$('#valid_nickname').text(resp.data.valid_nickname);
-				}
-				else $('#valid_nickname').text('');
-
 				if (resp.data.hasOwnProperty('valid_email')) {
 					$('#valid_email').text(resp.data.valid_email);
+					$('#email').focus();
+				} else {
+					$('#valid_email').text('');
 				}
-				else $('#valid_email').text('');
+				
+				if (resp.data.hasOwnProperty('valid_nickname')) {
+					$('#valid_nickname').text(resp.data.valid_nickname);
+					$('#nickname').focus();
+				} else {
+					$('#valid_nickname').text('');
+				}
+				
+				if (resp.data.hasOwnProperty('valid_password')) {
+					$('#valid_password').text(resp.data.valid_password);
+					$('#password').focus();
+				} else {
+					$('#valid_password').text('');
+				}
+				
+				if (resp.data.hasOwnProperty('valid_username')) {
+					$('#valid_username').text(resp.data.valid_username);
+					$('#username').focus();
+				} else {
+					$('#valid_username').text('');
+				}
+				
+				closeLoadingWithMask();
 			}
 			else {
 				alert("회원가입이 완료되었습니다.");
@@ -100,6 +110,8 @@ let index_user = {
 	},
 	
 	find: function() {
+		LoadingWithMask();
+		
 		let data = {
 			username: $("#username").val(),
 			email: $("#email").val()	
@@ -112,8 +124,22 @@ let index_user = {
 			contentType: "application/json; charset=utf-8"
 		}).done(function(resp) {
 			if (resp.status == 400) {
-				$("#valid_username").text(resp.data);
-			} else {
+				if (resp.data.hasOwnProperty('valid_email')) {
+					$('#valid_email').text(resp.data.valid_email);
+					$('#email').focus();
+				} else {
+					$('#valid_email').text('');
+				}
+				
+				if (resp.data.hasOwnProperty('valid_username')) {
+					$('#valid_username').text(resp.data.valid_username);
+					$('#username').focus();
+				} else {
+					$('#valid_username').text('');
+				}
+				
+				closeLoadingWithMask();
+			} else {				
 				alert("임시 비밀번호가 발송되었습니다.");
 				location.href = "/auth/loginForm";
 			}
@@ -160,4 +186,37 @@ function profileImageUpload(user_id) {
 			console.log(error);
 		});
 	});
+}
+
+function LoadingWithMask() {
+    //화면의 높이와 너비를 구합니다.
+    var maskHeight = $(document).height();
+    var maskWidth  = window.document.body.clientWidth;
+     
+    //화면에 출력할 마스크를 설정해줍니다.
+    var mask    = "<div id='mask' style='position:absolute; z-index:9000; background-color:#000000; display:none; left:0; top:0;'></div>";
+    var spinner = "<div id='spinner' style='position: absolute; top: 45%; left: 50%; margin: -16px 0 0 -16px; display: none; color: #4dff93;' class='spinner-border'></div>";
+ 
+    //화면에 레이어 추가
+    $('body')
+        .append(mask)
+ 
+    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채웁니다.
+    $('#mask').css({
+            'width' : maskWidth,
+            'height': maskHeight,
+            'opacity' : '0.3'
+    }); 
+  
+    //마스크 표시
+    $('#mask').show();
+  
+    //로딩중 이미지 표시
+    $('body').append(spinner);
+    $('#spinner').show();
+}
+
+function closeLoadingWithMask() {
+	$('#mask, #spinner').hide();
+	$('#mask, #spinner').empty();
 }

@@ -25,6 +25,6 @@ public class UserRequestDto {
 	private String nickname;
 	
 	@NotBlank(message = "이메일은 필수 입력 값입니다.")
-	@Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "이메일 형식이 올바르지 않습니다.")
+	@Pattern(regexp = "^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$", message = "이메일 형식이 올바르지 않습니다.")
 	private String email;
 }

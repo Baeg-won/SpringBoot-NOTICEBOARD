@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url('https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300&display=swap');
 
 .home-content {
 	padding: 0px;
@@ -16,11 +16,14 @@
 }
 
 .background-text {
-	font-family: 'Fuzzy Bubbles', cursive;
-	width: 290px;
-	font-size: 20px;
+	font-family: 'Chakra Petch', sans-serif;
+	width: 800px;
+	text-align: center;
+	color: white;
+	font-size: 100px;
+	font-weight: bold;
 	position: absolute;
-	top: 50%;
+	top: 35%;
 	left: 50%;
-	transform: translate( -82%, -52% );
+	transform: translate(-50%, -50%);
 }

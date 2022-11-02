@@ -29,23 +29,12 @@
 <link href="/css/admin.css" rel="stylesheet" type="text/css">
 <link href="/css/form.css" rel="stylesheet" type="text/css">
 <script src="https://kit.fontawesome.com/2804b86193.js" crossorigin="anonymous"></script>
-<style>
-@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
-@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
-
-body {
-	font-family: nanumsquare;
-	word-spacing: -4px;
-}
-</style>
 </head>
 <body>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<div id="sidebarCollapse" style="color: white; margin-right: 20px; font-size: 25px; cursor: pointer;"><i class="fa-solid fa-bars"></i></div>
 		<a class="navbar-brand" href="/"><i class="fa-solid fa-house"></i> Home</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<div>
 			<c:choose>
 				<c:when test="${empty principal}">
 					<ul class="navbar-nav">
@@ -109,5 +98,7 @@ body {
 			</div>
 		</c:if>
 	</nav>
-	
+
+<%@ include file="sidebar.jsp"%>
 <script src="/js/alarm.js"></script>
+<script src="/js/sidebar.js"></script>

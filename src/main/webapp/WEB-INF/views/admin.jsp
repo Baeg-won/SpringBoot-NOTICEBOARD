@@ -2,10 +2,10 @@
 
 <!-- 헤더, 사이드바 레이아웃 설정 -->
 <%@ include file="layout/header.jsp"%>
-<%@ include file="layout/sidebar.jsp"%>
 <!-- 헤더, 사이드바 레이아웃 설정 끝 -->
 
-	<div id="content">
+<div id="wrapper">
+	<div id="content" class="container">
 		<c:if test="${category eq 'user'}">
 			<div class="board-title">| 회원 관리</div>
 			
@@ -132,7 +132,6 @@
 			</div>
 		</c:if>
 	</div>
-</div>
 
 <!-- 게시글 수 모달 -->
 <div class="modal fade" id="modal">

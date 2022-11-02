@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<div id="outer-container">
-	<div class="bg-light" id="sidebar" align="center">
+	<div class="bg-dark" id="sidebar" align="center">
 		<form id="userProfileImageForm">
 			<input type="file" name="profileImageFile" id="userProfileImageInput" style="display: none;"/>
 		</form>
@@ -29,3 +28,4 @@
 			<li class="category-li" onclick="location.href='/board?category=question'"><i class="fa-solid fa-link"></i>&nbsp; 질문과 답변</li>
 		</ul>
 	</div>
+	<div class="overlay" onclick="sidebarHide()"></div>

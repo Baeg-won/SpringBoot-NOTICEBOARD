@@ -27,9 +27,13 @@ function modalOpen(type, nickname, user_id) {
 		url: `/api/board/${user_id}`,
 		dataType: "json"
 		}).done(resp => {
-			resp.forEach((board) => {
-				item += getBoardModalItem(board);
-			});
+			if(resp.length > 0) {
+				resp.forEach((board) => {
+					item += getBoardModalItem(board);
+				});
+			} else {
+				item = '<div class="board-empty" align="center">등록한 게시글이 없습니다.</div>';
+			}
 			$("#modalTableBody").append(item);
 		}).fail(error => {
 			console.log(error);
@@ -48,9 +52,13 @@ function modalOpen(type, nickname, user_id) {
 		url: `/api/reply/${user_id}`,
 		dataType: "json"
 		}).done(resp => {
-			resp.forEach((reply) => {
-				item += getReplyModalItem(reply);
-			});
+			if(resp.length > 0) {
+				resp.forEach((reply) => {
+					item += getReplyModalItem(reply);
+				});
+			} else {
+				item = '<div class="board-empty" align="center">등록한 댓글이 없습니다.</div>';
+			}
 			$("#modalTableBody").append(item);
 		}).fail(error => {
 			console.log(error);
@@ -85,4 +93,7 @@ function getReplyModalItem(reply) {
 function modalClose() {
 	$("#modalTableHead > tr").remove();
 	$("#modalTableBody > tr").remove();
+	
+	$("#modalTableHead > div").remove();
+	$("#modalTableBody > div").remove();
 }

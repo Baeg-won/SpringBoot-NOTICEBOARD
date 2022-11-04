@@ -12,7 +12,7 @@
 			</c:when>
 			<c:otherwise>
 				<img id="userProfileImage" src="/image/profile.jpg" class="rounded-circle profile">
-				<div>로그인을 하지 않은 상태입니다.</div>
+				<div>비로그인 상태입니다.</div>
 			</c:otherwise>
 		</c:choose>
 		<br>

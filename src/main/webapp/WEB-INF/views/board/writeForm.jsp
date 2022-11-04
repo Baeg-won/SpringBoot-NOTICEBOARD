@@ -20,15 +20,17 @@
 				<textarea class="form-control summernote" rows="5" id="content"></textarea>
 			</div>
 		</form>
-		<button id="btn-write" class="btn btn-confirm">
-			<i class="fa-solid fa-check"></i> 등록
-		</button>
+		<div align="right">
+			<button id="btn-write" class="btn btn-confirm">
+				<i class="fa-solid fa-check"></i> 등록
+			</button>
+		</div>
 	</div>
 
 <script>
 	$('.summernote').summernote({
 	  // 에디터 높이
-	  height: 150,
+	  height: 600,
 	  // 에디터 한글 설정
 	  lang: "ko-KR",
 	  // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
@@ -71,7 +73,10 @@
 				}
 			}
 		}
-	});
+	}).on("summernote.enter", function(we, e) {
+        $(this).summernote("pasteHTML", "<br><br>");
+        e.preventDefault();
+    }); //Enter 후에 <br><br> 제거 하는 코드
 	
 	/**
 	* 이미지 파일 업로드

@@ -43,109 +43,118 @@
 		<!-- 정렬 메뉴 및 검색창 끝 -->
 		
 		<c:choose>
-			<c:when test="${param.category eq 'screenshot'}">
-				<hr>
-				<div class="row justify-content-center">
-				
-					<!-- 스크린샷 게시판 썸네일 설정 변수 -->
-					<script>
-						let content, doc, wrap, img, src, div;
-						let parser = new DOMParser();
-					</script>
-					<!-- 스크린샷 게시판 썸네일 설정 변수 끝 -->
-					
-					<c:forEach var="board" items="${boards.content}">
-						<div id="${board.id}" class="card div-screenshot" 
-							onclick="location.href='/board/${board.id}/?category=${param.category}&page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}&sortType=${param.sortType}'">
+			<c:when test="${boards.content.size() > 0}">
+				<c:choose>
+					<c:when test="${param.category eq 'screenshot'}">
+						<hr>
+						<div class="row justify-content-center">
 						
-							<!-- 스크린샷 게시판 썸네일 설정 -->
+							<!-- 스크린샷 게시판 썸네일 설정 변수 -->
 							<script>
-						    	content = '${board.content}';
-							    doc = parser.parseFromString(content, 'text/html');
-							    
-							    wrap = document.createElement('div');
-							    wrap.setAttribute("id", "wrap-${board.id}")
-							    wrap.setAttribute("class", "wrap")
-							    
-							    img = document.createElement('img');
-							    img.setAttribute("src", "image/no-image.jpg");
-							    if(doc.getElementsByTagName('img')[0] != null) {
-							    	src = doc.getElementsByTagName('img')[0].src;
-							    	src = src.replace('http://localhost:8000/upload/', 'http://localhost:8000/upload/s_');
-							    	img.setAttribute("src", src);
-							    }
-							    img.setAttribute("class", "thumnail");
-							    
-							    div = document.getElementById('${board.id}');
-							    wrap.appendChild(img);
-							    div.appendChild(wrap);
+								let content, doc, wrap, img, src, div;
+								let parser = new DOMParser();
 							</script>
-							<!-- 스크린샷 게시판 썸네일 설정 끝 -->
+							<!-- 스크린샷 게시판 썸네일 설정 변수 끝 -->
 							
-							<!-- 스크린샷 게시판 카드 -->
-							<div class="card-body">
-								<div class="flex">
-									<div class="card-title screenshot-card-title">${board.title}</div>
-									<c:if test="${fn:length(board.replys) > 0}">
-										<div class="reply">&nbsp;[${fn:length(board.replys)}]</div>
-									</c:if>
+							<c:forEach var="board" items="${boards.content}">
+								<div id="${board.id}" class="card div-screenshot" 
+									onclick="location.href='/board/${board.id}/?category=${param.category}&page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}&sortType=${param.sortType}'">
+								
+									<!-- 스크린샷 게시판 썸네일 설정 -->
+									<script>
+								    	content = '${board.content}';
+									    doc = parser.parseFromString(content, 'text/html');
+									    
+									    wrap = document.createElement('div');
+									    wrap.setAttribute("id", "wrap-${board.id}")
+									    wrap.setAttribute("class", "wrap")
+									    
+									    img = document.createElement('img');
+									    img.setAttribute("src", "image/no-image.jpg");
+									    if(doc.getElementsByTagName('img')[0] != null) {
+									    	src = doc.getElementsByTagName('img')[0].src;
+									    	src = src.replace('http://localhost:8000/upload/', 'http://localhost:8000/upload/s_');
+									    	img.setAttribute("src", src);
+									    }
+									    img.setAttribute("class", "thumnail");
+									    
+									    div = document.getElementById('${board.id}');
+									    wrap.appendChild(img);
+									    div.appendChild(wrap);
+									</script>
+									<!-- 스크린샷 게시판 썸네일 설정 끝 -->
+									
+									<!-- 스크린샷 게시판 카드 -->
+									<div class="card-body">
+										<div class="flex">
+											<div class="card-title screenshot-card-title">${board.title}</div>
+											<c:if test="${fn:length(board.replys) > 0}">
+												<div class="reply">&nbsp;[${fn:length(board.replys)}]</div>
+											</c:if>
+										</div>
+										<div class="card-text screenshot-bottom">${board.user.nickname}</div>
+										<div class="justify-content-between flex">
+											<div class="screenshot-bottom"><i class="fa-solid fa-eye"></i> ${board.count}</div>
+											<div class="screenshot-bottom"><i class="fa-solid fa-thumbs-up"></i> ${board.recommendCount}</div>
+										</div>
+									</div>
+									<!-- 스크린샷 게시판 카드 끝 -->
+									
 								</div>
-								<div class="card-text screenshot-bottom">${board.user.nickname}</div>
-								<div class="justify-content-between flex">
-									<div class="screenshot-bottom"><i class="fa-solid fa-eye"></i> ${board.count}</div>
-									<div class="screenshot-bottom"><i class="fa-solid fa-thumbs-up"></i> ${board.recommendCount}</div>
-								</div>
-							</div>
-							<!-- 스크린샷 게시판 카드 끝 -->
-							
+							</c:forEach>
 						</div>
-					</c:forEach>
-				</div>
+					</c:when>
+					<c:otherwise>
+					
+						<!-- 게시글 표 -->
+						<table class="table board-table table-hover">
+							<thead>
+								<tr>
+									<th class="board-table-no">번호</th>
+									<th class="board-table-title">제목</th>
+									<th class="board-table-writer">작성자</th>
+									<th class="board-table-date">등록일</th>
+									<th class="board-table-view">조회</th>
+									<th class="board-table-recommend">추천</th>
+								</tr>
+							</thead>
+							<c:forEach var="board" items="${boards.content}">
+								<c:set var="user" value="[${Integer.toString(principal.user.id)}]" />
+								<tbody>
+									<tr onclick="location.href='/board/${board.id}/?category=${param.category}&page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}&sortType=${param.sortType}'">
+										<th>${board.id}</th>
+										<th class="board-table-title">${board.title}<c:if test="${fn:length(board.replys) > 0}">
+												<span class="reply">[${fn:length(board.replys)}]</span>
+											</c:if>
+										</th>
+										
+										<!-- 비밀게시판 분기 -->
+										<c:choose>
+											<c:when test="${param.category eq 'secret'}">
+												<th>익명</th>
+											</c:when>
+											<c:otherwise>
+												<th>${board.user.nickname}</th>
+											</c:otherwise>
+										</c:choose>
+										<!-- 비밀게시판 분기 끝 -->
+										
+										<th>${board.createDate}</th>
+										<th>${board.count}</th>
+										<th>${board.recommendCount}</th>
+									</tr>
+								</tbody>
+							</c:forEach>
+						</table>
+					</c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
-			
-				<!-- 게시글 표 -->
-				<table class="table board-table table-hover">
-					<thead>
-						<tr>
-							<th class="board-table-no">번호</th>
-							<th class="board-table-title">제목</th>
-							<th class="board-table-writer">작성자</th>
-							<th class="board-table-date">등록일</th>
-							<th class="board-table-view">조회</th>
-							<th class="board-table-recommend">추천</th>
-						</tr>
-					</thead>
-					<c:forEach var="board" items="${boards.content}">
-						<c:set var="user" value="[${Integer.toString(principal.user.id)}]" />
-						<tbody>
-							<tr onclick="location.href='/board/${board.id}/?category=${param.category}&page=${param.page}&sort=${param.sort}&searchType=${param.searchType}&searchKeyword=${param.searchKeyword}&sortType=${param.sortType}'">
-								<th>${board.id}</th>
-								<th class="board-table-title">${board.title}<c:if test="${fn:length(board.replys) > 0}">
-										<span class="reply">[${fn:length(board.replys)}]</span>
-									</c:if>
-								</th>
-								
-								<!-- 비밀게시판 분기 -->
-								<c:choose>
-									<c:when test="${param.category eq 'secret'}">
-										<th>익명</th>
-									</c:when>
-									<c:otherwise>
-										<th>${board.user.nickname}</th>
-									</c:otherwise>
-								</c:choose>
-								<!-- 비밀게시판 분기 끝 -->
-								
-								<th>${board.createDate}</th>
-								<th>${board.count}</th>
-								<th>${board.recommendCount}</th>
-							</tr>
-						</tbody>
-					</c:forEach>
-				</table>
+				<hr>
+				<div class="board-empty" align="center">등록된 게시글이 없습니다.</div>
 			</c:otherwise>
 		</c:choose>
+		
 		<br>
 		<div align="right">
 			<button class="btn btn-write" onclick="location.href='/board/writeForm'">

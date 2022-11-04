@@ -73,28 +73,35 @@
 		<div class="card">
 			<div class="card-header"><i class="fa-solid fa-comment"></i> 댓글 <span class="reply">[${fn:length(board.replys)}]</span></div>
 			<ul id="reply-box" class="list-group">
-				<c:forEach var="reply" items="${board.replys}">
-					<li id="reply-${reply.id}" class="list-group-item justify-content-between">
-						<div class="d-flex">
-							<p class="font-bold">
-								<c:choose>
-									<c:when test="${board.category eq 'secret'}">
-										<p><i class="fa-solid fa-user"></i> 익명</p>							
-									</c:when>
-									<c:otherwise>
-										<img class="rounded-circle" src="/upload/${reply.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30">
-										&nbsp;&nbsp;${reply.user.nickname}
-									</c:otherwise>
-								</c:choose>
-							</p>&nbsp;
-							<div class="create-datetime">(${reply.createDateTime})</div>
-						</div>
-						<div>${reply.content}</div>
-						<c:if test="${reply.user.nickname == principal.user.nickname}">
-							<button onClick="index_board.replyDelete(${board.id}, ${reply.id})" class="badge float-right"><i class="fa-solid fa-trash"></i> 삭제</button>
-						</c:if>
-					</li>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${board.replys.size() > 0}">
+						<c:forEach var="reply" items="${board.replys}">
+							<li id="reply-${reply.id}" class="list-group-item justify-content-between">
+								<div class="d-flex">
+									<p class="font-bold">
+										<c:choose>
+											<c:when test="${board.category eq 'secret'}">
+												<p><i class="fa-solid fa-user"></i> 익명</p>							
+											</c:when>
+											<c:otherwise>
+												<img class="rounded-circle" src="/upload/${reply.user.profile_image_url}" onerror="this.src='/image/profile.jpg'" width="30" height="30">
+												&nbsp;&nbsp;${reply.user.nickname}
+											</c:otherwise>
+										</c:choose>
+									</p>&nbsp;
+									<div class="create-datetime">(${reply.createDateTime})</div>
+								</div>
+								<div>${reply.content}</div>
+								<c:if test="${reply.user.nickname == principal.user.nickname}">
+									<button onClick="index_board.replyDelete(${board.id}, ${reply.id})" class="badge float-right"><i class="fa-solid fa-trash"></i> 삭제</button>
+								</c:if>
+							</li>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div class="reply-empty" align="center">등록된 댓글이 없습니다.</div>
+					</c:otherwise>
+				</c:choose>
 			</ul>
 		</div>
 		<br>

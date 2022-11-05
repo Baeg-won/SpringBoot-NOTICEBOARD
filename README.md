@@ -70,16 +70,15 @@
 <hr>
 
 ### 3. DB 설계
-![blog_erd](src/main/resources/static/image/blog_erd.png)
+![blog_erd](https://user-images.githubusercontent.com/45421117/200116322-64312c36-56ec-44cd-b208-9fcf0b19425c.png)
 
 <hr>
 
 ### 4. API 설계
-![user_api](src/main/resources/static/image/user_api.png)
-![board_api](src/main/resources/static/image/board_api.png)
-![reply_api](src/main/resources/static/image/reply_api.png)
-![admin_api](src/main/resources/static/image/admin_api.png)
-
+![user_api](https://user-images.githubusercontent.com/45421117/200116331-ed0d41bb-2c99-46ed-be9d-ec7370a28c75.png)
+![board_api](https://user-images.githubusercontent.com/45421117/200116338-fe21cd4c-892e-4f30-bf66-8f1f74547ba1.png)
+![reply_api](https://user-images.githubusercontent.com/45421117/200116349-d5239ef3-3319-44f2-b917-d637dbf79f4f.png)
+![admin_api](https://user-images.githubusercontent.com/45421117/200116356-0d6eed77-d5c2-45a8-8d93-417dbc03c844.png)
 <hr>
 
 ### 5. 개발 내용

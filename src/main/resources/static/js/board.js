@@ -21,7 +21,7 @@ let index_board = {
 		let data = {
 			category: $("#category option:selected").val(),
 			title: $("#title").val(),
-			content: $("#content").val()
+			content: $("#board-content").val()
 		};
 		
 		if(!data.title || !data.content || data.title.trim() == '') {

@@ -16,8 +16,8 @@
 				<label for="title"><i class="fa-solid fa-pen-nib"></i> 제목</label> <input type="text" class="form-control" placeholder="Enter title" id="title">
 			</div>
 			<div class="form-group">
-				<label for="content"><i class="fa-solid fa-pen-nib"></i> 내용</label>
-				<textarea class="form-control summernote" rows="5" id="content"></textarea>
+				<label for="board-content"><i class="fa-solid fa-pen-nib"></i> 내용</label>
+				<textarea class="form-control summernote" rows="5" id="board-content"></textarea>
 			</div>
 		</form>
 		<div align="right">

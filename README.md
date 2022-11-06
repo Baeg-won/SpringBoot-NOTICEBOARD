@@ -116,33 +116,55 @@
 <details>
 <summary>메인 페이지</summary>
 
+#### 홈페이지
 ![home](https://user-images.githubusercontent.com/45421117/200153100-c0f5c46c-0217-49df-aeab-071078654daf.png)
+
+#### 사이드바
 ![sidebar](https://user-images.githubusercontent.com/45421117/200153189-0eaca0cc-99cd-42c9-a394-99d55d7c638e.png)
 </details>
 
 <details>
 <summary>사용자 관련</summary>
 
+#### 로그인 페이지
 ![login](https://user-images.githubusercontent.com/45421117/200153149-7f7fa3c7-81d6-4d07-94e5-91ce7c373166.png)
+
+#### 로그인에 실패한 경우
 ![login_fail](https://user-images.githubusercontent.com/45421117/200153161-47a7516d-850c-4870-b92f-6c713df81d06.png)
+
+#### 회원가입 페이지
 ![join](https://user-images.githubusercontent.com/45421117/200153169-dfee9db1-6e5e-46b9-955e-4b888a4f63d0.png)
+
+#### 회원가입에 실패한 경우
 ![join_fail](https://user-images.githubusercontent.com/45421117/200153177-b42685fc-bfb9-485a-9b07-b63d76b2ce9f.png)
+
+#### 임시 비밀번호 발급 페이지
 ![find](https://user-images.githubusercontent.com/45421117/200153210-2daade94-337c-48f6-a062-7909fa2c8fcd.png)
 </details>
 
 <details>
 <summary>게시글 관련</summary>
 
+#### 게시글 목록 페이지
 ![board](https://user-images.githubusercontent.com/45421117/200153216-483deec3-a0db-462f-9aaa-ceab189bb399.png)
+
+#### 게시글 상세보기 페이지
 ![board_detail](https://user-images.githubusercontent.com/45421117/200153219-2de5d063-3517-4a34-8f1e-e66d5df460a3.png)
+
+#### 게시글 작성 페이지
 ![board_write](https://user-images.githubusercontent.com/45421117/200153220-f3301e64-9281-424e-93b8-8b4fc350f436.png)
 </details>
 
 <details>
 <summary>관리자 관련</summary>
 
+#### 회원 관리 페이지
 ![admin_user](https://user-images.githubusercontent.com/45421117/200153233-11f7bf85-4edb-4416-a441-222d60f44790.png)
+
+#### 게시글 관리 모달
 ![admin_board](https://user-images.githubusercontent.com/45421117/200153235-83c3a225-0c0f-4f7d-bc45-b20cba032145.png)
+
+#### 게시글 통계 페이지
 ![admin_data](https://user-images.githubusercontent.com/45421117/200153239-d214fe3a-9629-4c43-a0e5-e9786366efe8.png)
 </details>
 

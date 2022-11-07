@@ -32,27 +32,29 @@
 <script src="https://kit.fontawesome.com/2804b86193.js" crossorigin="anonymous"></script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-		<div id="sidebarCollapse" style="color: white; margin-right: 20px; font-size: 25px; cursor: pointer;"><i class="fa-solid fa-bars"></i></div>
-		<a class="navbar-brand" href="/"><i class="fa-solid fa-house"></i> Home</a>
-		<div>
-			<c:choose>
-				<c:when test="${empty principal}">
-					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" href="/auth/loginForm"><i class="fa-solid fa-right-to-bracket"></i> Sign in</a></li>
-						<li class="nav-item"><a class="nav-link" href="/auth/joinForm"><i class="fa-solid fa-user-plus"></i> Sign up</a></li>
-					</ul>
-				</c:when>
-				<c:otherwise>
-					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" href="/user/updateForm"><i class="fa-solid fa-user"></i> Profile</a></li>
-						<li class="nav-item"><a class="nav-link" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
-					</ul>
-				</c:otherwise>
-			</c:choose>
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark justify-content-between">
+		<div class="flex">
+			<div id="sidebarCollapse" style="color: white; margin-right: 20px; font-size: 25px; cursor: pointer;"><i class="fa-solid fa-bars"></i></div>
+			<a class="navbar-brand" href="/"><i class="fa-solid fa-house"></i> Home</a>
+			<div>
+				<c:choose>
+					<c:when test="${empty principal}">
+						<ul class="navbar-nav">
+							<li class="nav-item"><a class="nav-link" href="/auth/loginForm"><i class="fa-solid fa-right-to-bracket"></i> Sign in</a></li>
+							<li class="nav-item"><a class="nav-link" href="/auth/joinForm"><i class="fa-solid fa-user-plus"></i> Sign up</a></li>
+						</ul>
+					</c:when>
+					<c:otherwise>
+						<ul class="navbar-nav">
+							<li class="nav-item"><a class="nav-link" href="/user/updateForm"><i class="fa-solid fa-user"></i> Profile</a></li>
+							<li class="nav-item"><a class="nav-link" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Sign out</a></li>
+						</ul>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 		<c:if test="${fn:length(alarms) > 0}">
-			<div class="dropdown">
+			<div class="dropdown" align="right">
 				<div class="btn btn-alarm bg-dark dropdown" data-toggle="dropdown">
 					<i class="fa-solid fa-bell"></i>
 					<c:set var="alarm_count" value="0" />

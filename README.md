@@ -138,6 +138,9 @@
 #### 회원가입에 실패한 경우
 ![join_fail](https://user-images.githubusercontent.com/45421117/200153177-b42685fc-bfb9-485a-9b07-b63d76b2ce9f.png)
 
+#### 회원정보 수정 페이지
+![profile](https://user-images.githubusercontent.com/45421117/200278727-1cf99a29-9907-430a-92a7-d7f87f351b3f.png)
+
 #### 임시 비밀번호 발급 페이지
 ![find](https://user-images.githubusercontent.com/45421117/200153210-2daade94-337c-48f6-a062-7909fa2c8fcd.png)
 </details>
@@ -153,6 +156,9 @@
 
 #### 게시글 작성 페이지
 ![board_write](https://user-images.githubusercontent.com/45421117/200153220-f3301e64-9281-424e-93b8-8b4fc350f436.png)
+
+#### 댓글 알림 기능
+![alarm](https://user-images.githubusercontent.com/45421117/200205577-8ab46e2f-bdf0-4e1c-9be1-5fd4ab7f04fb.png)
 </details>
 
 <details>

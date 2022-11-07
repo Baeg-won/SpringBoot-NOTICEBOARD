@@ -32,7 +32,7 @@ public class BoardController {
 	
 	@GetMapping("/board")
 	public String index(Model model,  
-			@PageableDefault(size = 12, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+			@PageableDefault(size = 15, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
 			@RequestParam(value = "category", defaultValue = "none") String category,
 			@RequestParam(value = "searchType", defaultValue = "") String searchType,
 			@RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
@@ -55,20 +55,6 @@ public class BoardController {
 		}
 		
 		model.addAttribute("boards", boardRepository.findAll(spec, pageable));
-		
-		/*
-		 * if(category.equals("screenshot")) { model.addAttribute("boards",
-		 * boardRepository.findAllByCategory(CategoryType.SCREENSHOT, pageable)); return
-		 * "index"; }
-		 * 
-		 * if(searchKeyword == null || searchKeyword.isBlank()) {
-		 * model.addAttribute("boards", boardRepository.findAll(pageable)); }
-		 * 
-		 * if(searchType.equals("nickname")) { model.addAttribute("boards",
-		 * boardRepository.findByUserNicknameContaining(searchKeyword, pageable)); }
-		 * else { model.addAttribute("boards",
-		 * boardRepository.findByTitleContaining(searchKeyword, pageable)); }
-		 */
 		
 		return "index";
 	}

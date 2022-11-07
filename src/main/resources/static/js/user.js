@@ -77,7 +77,7 @@ let index_user = {
 			nickname: $("#nickname").val()
 		};
 		
-		if(!data.nickname || data.nickname.trim() === "" || !data.password || data.password.trim() === "") {            
+		if(!data.nickname || data.nickname.trim() === "" || !data.password || data.password.trim() === "") {
 			alert("공백 또는 입력하지 않은 부분이 있습니다.");            
 			return false;        
 		} else if(!/(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,16}/.test(data.password)) {            

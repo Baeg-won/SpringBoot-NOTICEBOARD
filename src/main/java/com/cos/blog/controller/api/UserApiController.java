@@ -68,7 +68,7 @@ public class UserApiController {
 	}
 
 	@PutMapping("/user")
-	public ResponseDto<?> update(@RequestBody UserRequestDto userDto) {
+	public ResponseDto<?> update(@RequestBody UserRequestDto userDto) {		
 		userService.update(userDto);
 
 		Authentication authentication = authenticationManager

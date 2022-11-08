@@ -13,3 +13,10 @@
 .detail-bottom {
 	color: blue;
 }
+
+.board-style {
+	border: 1px solid #E5E7E9;
+	padding: 35px;
+	background: #FBFCFC;
+	border-radius: 1em;
+}

@@ -15,9 +15,11 @@
 						<div class="form-group" align="left">
 							<label for="password">Password</label> <input type="password" class="form-control" placeholder="Enter password" id="password">
 						</div>
+						<p class="valid-text" id="valid_password" align="left"></p>
 						<div class="form-group" align="left">
 							<label for="nickname">Nickname</label> <input type="text" value="${principal.user.nickname}" class="form-control" placeholder="Enter nickname" id="nickname">
 						</div>
+						<p class="valid-text" id="valid_nickname" align="left"></p>
 						<div class="form-group" align="left">
 							<label for="email">Email address</label> <input type="email" value="${principal.user.email}" class="form-control" placeholder="Enter email" id="email" readonly>
 						</div>
@@ -35,7 +37,9 @@
 			<c:choose>
 				<c:when test="${empty principal.user.oauth}">
 					<div align="right">
-						<button id="btn-update" class="btn btn-confirm"><i class="fa-solid fa-check"></i> 완료</button>
+						<button id="btn-update" class="btn btn-confirm">
+							<i class="fa-solid fa-check"></i> 완료
+						</button>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -44,7 +48,7 @@
 			</c:choose>
 		</div>
 	</div>
-<br>
+	<br>
 
 <%@ include file="../layout/footer.jsp"%>
 <script src="/js/user.js"></script>

@@ -78,17 +78,23 @@ let index_user = {
 		};
 		
 		if(!data.nickname || data.nickname.trim() === "" || !data.password || data.password.trim() === "") {
-			alert("공백 또는 입력하지 않은 부분이 있습니다.");            
+			alert("공백 또는 입력하지 않은 부분이 있습니다.");
+			return false;
+		}
+		
+		if(!/(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,16}/.test(data.password)) {            
+			$("#valid_password").text("비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");  
+			$('#password').focus();
 			return false;        
-		} else if(!/(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\W)(?=\S+$).{8,16}/.test(data.password)) {            
-			alert("비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");            
-			$('#password').focus();            
-			return false;        
-		} else if(!/^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$/.test(data.nickname)) {            
-			alert("닉네임은 특수문자를 제외한 2~10자리여야 합니다.");            
+		}
+		if(!/^[ㄱ-ㅎ가-힣a-z0-9-_]{2,10}$/.test(data.nickname)) {            
+			$("#valid_nickname").text("닉네임은 특수문자를 제외한 2~10자리여야 합니다.");  
 			$('#nickname').focus();            
 			return false;        
 		}
+		
+		$("#valid_password").text('');
+		$("#valid_nickname").text('');
 		
 		$.ajax({
 			type: "PUT",
@@ -98,7 +104,7 @@ let index_user = {
 			//dataType: "json"
 		}).done(function(resp) {
 			if(resp.status === 500) {
-				alert("이미 사용중인 닉네임 입니다.");
+				$("#valid_nickname").text("이미 사용중인 닉네임입니다.");
 				$("#nickname").focus();
 				return false;
 			}

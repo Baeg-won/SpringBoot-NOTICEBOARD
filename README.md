@@ -1,8 +1,8 @@
-# SpringBoot Blog Project
+# 스프링부트 게시판 프로젝트
 
 ### 1. 프로젝트 개요
-- 프로젝트 명칭 : Baeg-won Blog
-- 프로젝트 소개 : JPA를 활용한 블로그 및 게시판 프로젝트
+- 프로젝트 명칭 : 스프링부트 게시판
+- 프로젝트 소개 : JPA를 활용한 게시판 프로젝트
 - 개발 인원 : 1명
 - 주요 기능
 	- 폼 로그인 / OAuth 2.0 로그인 기능
@@ -70,7 +70,7 @@
 <hr>
 
 ### 3. DB 설계
-![blog_erd](https://user-images.githubusercontent.com/45421117/200116322-64312c36-56ec-44cd-b208-9fcf0b19425c.png)
+![erd](https://user-images.githubusercontent.com/45421117/202832751-b1db63c6-ca6a-471e-8825-946c1b21c866.png)
 
 <hr>
 
@@ -82,33 +82,33 @@
 <hr>
 
 ### 5. 개발 내용
-1. [[SpringBoot / Blog Project] 메인페이지 만들기](https://daegwonkim.tistory.com/249)
-2. [[SpringBoot / Blog Project] 로그인, 회원가입 페이지 만들기](https://daegwonkim.tistory.com/250)
-3. [[SpringBoot / Blog Project] 회원가입 기능 구현하기](https://daegwonkim.tistory.com/252)
-4. [[SpringBoot / Blog Project] 로그인 기능 구현하기](https://daegwonkim.tistory.com/255)
-5. [[SpringBoot / Blog Project] 스프링 시큐리티 체험해보기](https://daegwonkim.tistory.com/259)
-6. [[SpringBoot / Blog Project] 비밀번호 해쉬 후 회원가입 및 로그인하기](https://daegwonkim.tistory.com/260)
-7. [[SpringBoot / Blog Project] 게시글 작성, 삭제, 수정, 페이징](https://daegwonkim.tistory.com/263)
-8. [[SpringBoot / Blog Project] 회원정보 수정](https://daegwonkim.tistory.com/266)
-9. [[SpringBoot / Blog Project] 카카오 로그인](https://daegwonkim.tistory.com/268)
-10. [[SpringBoot / Blog Project] 댓글 구현](https://daegwonkim.tistory.com/270)
-11. [[SpringBoot / Blog Project] 중간점검 및 수정](https://daegwonkim.tistory.com/319)
-12. [[SpringBoot / Blog Project] 로그인 실패 예외처리](https://daegwonkim.tistory.com/326)
-13. [[SpringBoot / Blog Project] Remember Me 기능 구현](https://daegwonkim.tistory.com/329)
-14. [[SpringBoot / Blog Project] 회원가입시 validation 체크](https://daegwonkim.tistory.com/332)
-15. [[SpringBoot / Blog Project] 커스텀 validation을 통한 중복검사 구현](https://daegwonkim.tistory.com/335)
-16. [[SpringBoot / Blog Project] 게시글 작성일 및 조회수 출력](https://daegwonkim.tistory.com/338)
-17. [[SpringBoot / Blog Project] 게시글 검색 기능 구현](https://daegwonkim.tistory.com/361)
-18. [[SpringBoot / Blog Project] 게시글 추천 기능 구현](https://daegwonkim.tistory.com/362)
-19. [[SpringBoot / Blog Project] 게시글 정렬 기능 구현](https://daegwonkim.tistory.com/363)
-20. [[SpringBoot / Blog Project] 이전글, 다음글 이동 기능 구현](https://daegwonkim.tistory.com/364)
-21. [[SpringBoot / Blog Project] 이전에 봤던 글 표시](https://daegwonkim.tistory.com/365)
-22. [[SpringBoot / Blog Project] 댓글 작성 알림 기능](https://daegwonkim.tistory.com/366)
-23. [[SpringBoot / Blog Project] 사용자 프로필 이미지 추가](https://daegwonkim.tistory.com/367)
-24. [[SpringBoot / Blog Project] JPA Specification을 통한 쿼리 조건 다루기](https://daegwonkim.tistory.com/368)
-25. [[SpringBoot / Blog Project] 관리자 페이지 - 회원 관리 구현](https://daegwonkim.tistory.com/369)
-26. [[SpringBoot / Blog Project] 관리자 페이지 - 게시글 통계 구현](https://daegwonkim.tistory.com/370)
-27. [[SpringBoot / Blog Project] 이메일을 통한 임시 비밀번호 발급](https://daegwonkim.tistory.com/371)
+1. [[스프링부트 게시판] 메인페이지 만들기](https://daegwonkim.tistory.com/249)
+2. [[스프링부트 게시판] 로그인, 회원가입 페이지 만들기](https://daegwonkim.tistory.com/250)
+3. [[스프링부트 게시판] 회원가입 기능 구현하기](https://daegwonkim.tistory.com/252)
+4. [[스프링부트 게시판] 로그인 기능 구현하기](https://daegwonkim.tistory.com/255)
+5. [[스프링부트 게시판] 스프링 시큐리티 체험해보기](https://daegwonkim.tistory.com/259)
+6. [[스프링부트 게시판] 비밀번호 해쉬 후 회원가입 및 로그인하기](https://daegwonkim.tistory.com/260)
+7. [[스프링부트 게시판] 게시글 작성, 삭제, 수정, 페이징](https://daegwonkim.tistory.com/263)
+8. [[스프링부트 게시판] 회원정보 수정](https://daegwonkim.tistory.com/266)
+9. [[스프링부트 게시판] 카카오 로그인](https://daegwonkim.tistory.com/268)
+10. [[스프링부트 게시판] 댓글 구현](https://daegwonkim.tistory.com/270)
+11. [[스프링부트 게시판] 중간점검 및 수정](https://daegwonkim.tistory.com/319)
+12. [[스프링부트 게시판] 로그인 실패 예외처리](https://daegwonkim.tistory.com/326)
+13. [[스프링부트 게시판] Remember Me 기능 구현](https://daegwonkim.tistory.com/329)
+14. [[스프링부트 게시판] 회원가입시 validation 체크](https://daegwonkim.tistory.com/332)
+15. [[스프링부트 게시판] 커스텀 validation을 통한 중복검사 구현](https://daegwonkim.tistory.com/335)
+16. [[스프링부트 게시판] 게시글 작성일 및 조회수 출력](https://daegwonkim.tistory.com/338)
+17. [[스프링부트 게시판] 게시글 검색 기능 구현](https://daegwonkim.tistory.com/361)
+18. [[스프링부트 게시판] 게시글 추천 기능 구현](https://daegwonkim.tistory.com/362)
+19. [[스프링부트 게시판] 게시글 정렬 기능 구현](https://daegwonkim.tistory.com/363)
+20. [[스프링부트 게시판] 이전글, 다음글 이동 기능 구현](https://daegwonkim.tistory.com/364)
+21. [[스프링부트 게시판] 이전에 봤던 글 표시](https://daegwonkim.tistory.com/365)
+22. [[스프링부트 게시판] 댓글 작성 알림 기능](https://daegwonkim.tistory.com/366)
+23. [[스프링부트 게시판] 사용자 프로필 이미지 추가](https://daegwonkim.tistory.com/367)
+24. [[스프링부트 게시판] JPA Specification을 통한 쿼리 조건 다루기](https://daegwonkim.tistory.com/368)
+25. [[스프링부트 게시판] 관리자 페이지 - 회원 관리 구현](https://daegwonkim.tistory.com/369)
+26. [[스프링부트 게시판] 관리자 페이지 - 게시글 통계 구현](https://daegwonkim.tistory.com/370)
+27. [[스프링부트 게시판] 이메일을 통한 임시 비밀번호 발급](https://daegwonkim.tistory.com/371)
 
 <hr>
 

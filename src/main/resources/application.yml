@@ -54,7 +54,7 @@ spring:
             enable: true
       
 secrect:
-  key: eornjs1449. 
+  key: 1234 
 
 file:
   path: D:/workspace/springboot/upload/
